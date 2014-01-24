@@ -1,0 +1,13 @@
+ajgon_lintpack:
+    jshint:
+        jshintrc: "/tmp/.jshintrc"
+        extensions:
+            - js
+            - javascript
+        ignores:
+            - r.js
+            - jquery.js
+        locations:
+            - %kernel.root_dir%/app
+            - %kernel.root_dir%/src
+            - %kernel.root_dir%/test

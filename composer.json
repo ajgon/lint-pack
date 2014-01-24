@@ -1,0 +1,28 @@
+{
+    "name": "ajgon/lint-pack",
+    "description": "Various linters for your Symfony2 project",
+    "type": "symfony-bundle",
+    "keywords": ["lint", "phpcs", "phpmd", "jshint", "csshint", "twig"],
+    "homepage": "https://github.com/ajgon/AjgonLintPackBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Igor Rzegocki",
+            "email": "ajgon@irgon.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "target-dir": "Ajgon/LintPackBundle",
+    "autoload": {
+        "psr-0": {
+            "Ajgon\\LintPackBundle": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

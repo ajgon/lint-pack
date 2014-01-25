@@ -28,8 +28,8 @@ class LintJshintCommand extends ContainerAwareCommand
         $process = new Process($command);
 
         $output->writeln($command);
-	$returnValue = $process->run();
-	$output->writeln($process->getOutput());
+        $returnValue = $process->run();
+        $output->writeln($process->getOutput());
 
         $this->displayResult($returnValue, $output);
         return $returnValue;
@@ -37,7 +37,7 @@ class LintJshintCommand extends ContainerAwareCommand
 
     public function getCommand()
     {
-        $config = $this->getContainer()->getParameter('ajgon_lintpack.jshint');
+        $config = $this->getContainer()->getParameter('lint_pack.jshint');
         $extensions = '/(?:\.' . implode('$)|(?:\.', $config['extensions']) . '$)/';
         $files = $this->getFilesMatching($config['locations'], $config['ignores'], $extensions);
 

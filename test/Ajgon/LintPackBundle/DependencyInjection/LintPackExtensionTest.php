@@ -12,7 +12,7 @@ class LintPackExtensionTest extends LintPackTestCase
     {
         $container = $this->getContainerBuilder();
         $this->loadConfigToContainer($container);
-        $jshintConfig = $container->getParameter('ajgon_lintpack.jshint');
+        $jshintConfig = $container->getParameter('lint_pack.jshint');
 
         $this->assertEquals('test-jshint', $jshintConfig['bin']);
         $this->assertEquals('/tmp/.jshintrc', $jshintConfig['jshintrc']);

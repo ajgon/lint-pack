@@ -22,8 +22,8 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
         }
 
         if ($parseDir) {
-            $config['ajgon_lintpack']['jshint']['locations'] =
-                $this->parseConfigDirs($config['ajgon_lintpack']['jshint']['locations']);
+            $config['lint_pack']['jshint']['locations'] =
+                $this->parseConfigDirs($config['lint_pack']['jshint']['locations']);
         }
         $this->extension->load($config, $container);
     }

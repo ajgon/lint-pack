@@ -12,6 +12,6 @@ class LintPackExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('ajgon_lintpack.jshint', $config['jshint']);
+        $container->setParameter('lint_pack.jshint', $config['jshint']);
     }
 }

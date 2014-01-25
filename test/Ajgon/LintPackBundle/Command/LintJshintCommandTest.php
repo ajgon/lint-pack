@@ -32,7 +32,7 @@ class LintJshintCommandTest extends LintPackTestCase
     public function testIfProcessExecutesCorrectly()
     {
         $config = $this->getTestConfig();
-        $config['ajgon_lintpack']['jshint']['bin'] = 'true';
+        $config['lint_pack']['jshint']['bin'] = 'true';
 
         list($returnValue, $output) = $this->executeClassWithConfig($config);
 
@@ -43,7 +43,7 @@ class LintJshintCommandTest extends LintPackTestCase
     public function testIfProcessFailsCorrectly()
     {
         $config = $this->getTestConfig();
-        $config['ajgon_lintpack']['jshint']['bin'] = 'false';
+        $config['lint_pack']['jshint']['bin'] = 'false';
 
         list($returnValue, $output) = $this->executeClassWithConfig($config);
 
@@ -65,7 +65,7 @@ class LintJshintCommandTest extends LintPackTestCase
             $config = $this->getTestConfig();
         }
 
-        $jshintConfig = $config['ajgon_lintpack']['jshint'];
+        $jshintConfig = $config['lint_pack']['jshint'];
         $goodFiles = $this->getValidFiles();
 
         return $jshintConfig['bin'] . ' --config ' . $jshintConfig['jshintrc'] . ' ' . implode(' ', $goodFiles);

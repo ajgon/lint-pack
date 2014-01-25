@@ -1,4 +1,4 @@
-ajgon_lintpack:
+lint_pack:
     jshint:
         bin: test-jshint
         jshintrc: "/tmp/.jshintrc"

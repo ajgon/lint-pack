@@ -9,7 +9,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('ajgon_lintpack');
+        $rootNode = $treeBuilder->root('lint_pack');
 
         $rootNode
             ->children()

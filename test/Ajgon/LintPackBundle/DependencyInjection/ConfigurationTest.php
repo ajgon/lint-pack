@@ -4,7 +4,9 @@ namespace Ajgon\LintPackBundle\DependencyInjection;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Config\Definition\Processor;
 
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+use Ajgon\LintPackBundle\Test\LintPackTestCase;
+
+class ConfigurationTest extends LintPackTestCase
 {
     public function setUp()
     {
@@ -15,6 +17,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $configValues = $this->processor->processConfiguration($this->config, array());
         $this->assertFalse($configValues['jshint']['enabled']);
+        $this->assertEquals('jshint', $configValues['jshint']['bin']);
         $this->assertEquals('%kernel.root_dir%/.jshintrc', $configValues['jshint']['jshintrc']);
         $this->assertEquals(array('js'), $configValues['jshint']['extensions']);
         $this->assertEquals(array(), $configValues['jshint']['ignores']);
@@ -29,20 +32,14 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function testIfJshintConfigContainsCustomValues()
     {
-        $configFromYaml = Yaml::parse(__DIR__.'/../../../fixtures/config.yml');
+        $configFromYaml = Yaml::parse(TESTS_PATH.'/fixtures/config.yml');
         $configValues = $this->processor->processConfiguration($this->config, $configFromYaml);
 
         $this->assertTrue($configValues['jshint']['enabled']);
+        $this->assertEquals('test-jshint', $configValues['jshint']['bin']);
         $this->assertEquals('/tmp/.jshintrc', $configValues['jshint']['jshintrc']);
         $this->assertEquals(array('js', 'javascript'), $configValues['jshint']['extensions']);
-        $this->assertEquals(array('r.js', 'jquery.js'), $configValues['jshint']['ignores']);
-        $this->assertEquals(
-            array(
-                '%kernel.root_dir%/app',
-                '%kernel.root_dir%/src',
-                '%kernel.root_dir%/test'
-            ),
-            $configValues['jshint']['locations']
-        );
+        $this->assertEquals(array('r.js', '*/jquery.js'), $configValues['jshint']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures'), $configValues['jshint']['locations']);
     }
 }

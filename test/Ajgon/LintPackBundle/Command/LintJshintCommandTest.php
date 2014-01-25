@@ -1,11 +1,14 @@
 <?php
 namespace Ajgon\LintPackBundle\Command;
 
-use Ajgon\LintPackBundle\Test\LintPackTestCase;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Yaml\Yaml;
+
+use Ajgon\LintPackBundle\Test\LintPackTestCase;
 
 class LintJshintCommandTest extends LintPackTestCase
 {
@@ -63,15 +66,7 @@ class LintJshintCommandTest extends LintPackTestCase
         }
 
         $jshintConfig = $config['ajgon_lintpack']['jshint'];
-
-        $goodFiles = array(
-            TESTS_PATH . '/fixtures/file.javascript',
-            TESTS_PATH . '/fixtures/file.js',
-            TESTS_PATH . '/fixtures/jquery.js',
-            TESTS_PATH . '/fixtures/subdir/file.javascript',
-            TESTS_PATH . '/fixtures/subdir/file.js',
-            TESTS_PATH . '/fixtures/subdir/r.js'
-        );
+        $goodFiles = $this->getValidFiles();
 
         return $jshintConfig['bin'] . ' --config ' . $jshintConfig['jshintrc'] . ' ' . implode(' ', $goodFiles);
     }
@@ -85,5 +80,23 @@ class LintJshintCommandTest extends LintPackTestCase
 
         $returnValue = $this->command->execute($input, $output);
         return array($returnValue, $output);
+    }
+
+    private function getValidFiles()
+    {
+        $goodFiles = array();
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(TESTS_PATH . DIRECTORY_SEPARATOR . 'fixtures'),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        foreach ($files as $file) {
+            $file = (string)$file;
+            if (preg_match('/(?:.*file\.j.*)|(?:fixtures.jquery)|(?:subdir.r)/', $file)) {
+                $goodFiles[] = $file;
+            }
+        }
+
+        return $goodFiles;
     }
 }

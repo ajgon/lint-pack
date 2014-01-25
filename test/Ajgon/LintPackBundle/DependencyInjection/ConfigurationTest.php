@@ -39,7 +39,7 @@ class ConfigurationTest extends LintPackTestCase
         $this->assertEquals('test-jshint', $configValues['jshint']['bin']);
         $this->assertEquals('/tmp/.jshintrc', $configValues['jshint']['jshintrc']);
         $this->assertEquals(array('js', 'javascript'), $configValues['jshint']['extensions']);
-        $this->assertEquals(array('r.js', '*/jquery.js'), $configValues['jshint']['ignores']);
+        $this->assertEquals(array('@r.js$@', '@s[^/]+/jquery.js@'), $configValues['jshint']['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures'), $configValues['jshint']['locations']);
     }
 }

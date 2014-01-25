@@ -92,7 +92,7 @@ class LintJshintCommandTest extends LintPackTestCase
 
         foreach ($files as $file) {
             $file = (string)$file;
-            if (preg_match('/(?:.*file\.j.*)|(?:fixtures.jquery)|(?:subdir.r)/', $file)) {
+            if (preg_match('/(?:.*file\.j.*)|(?:fixtures.jquery)/', $file)) {
                 $goodFiles[] = $file;
             }
         }

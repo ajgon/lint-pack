@@ -3,6 +3,7 @@ namespace Ajgon\LintPackBundle\Command;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use RegexIterator;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,6 +12,8 @@ use Symfony\Component\Process\Process;
 
 class LintJshintCommand extends ContainerAwareCommand
 {
+    private $allFiles = array();
+
     protected function configure()
     {
         $this
@@ -47,25 +50,28 @@ class LintJshintCommand extends ContainerAwareCommand
                implode(' ', $files);
     }
 
-    private function getFilesMatching($locations, $globPatternsToIgnore, $extensionsRegexp)
+    private function getFilesMatching($locations, $ignoresRegexpes, $extensionsRegexp)
     {
         $files = array();
 
         foreach ($locations as $location) {
-            $ignoredFiles = $this->findIgnoredFiles($location, $globPatternsToIgnore);
+            $ignoredFiles = $this->findIgnoredFiles($location, $ignoresRegexpes);
             $files = array_merge($files, $this->findFilesWhichAreNotIgnored($location, $ignoredFiles));
         }
 
         return $this->filterFilesMatchingExtensionsRegexp($files, $extensionsRegexp);
     }
 
-    private function findIgnoredFiles($location, $globPatternsToIgnore)
+    private function findIgnoredFiles($location, $ignoresRegexpes)
     {
         $ignoredFiles = array();
-        foreach ($globPatternsToIgnore as $globPatternToIgnore) {
-            $ignoredFiles = array_merge(
+        $allFiles = $this->getAllFiles($location);
+
+        foreach ($ignoresRegexpes as $ignoresRegexp) {
+
+            $ignoredFiles = array_merge_recursive(
                 $ignoredFiles,
-                glob($location . DIRECTORY_SEPARATOR . $globPatternToIgnore)
+                $this->convertIteratorToArray(new RegexIterator($allFiles, $ignoresRegexp))
             );
         }
 
@@ -75,10 +81,7 @@ class LintJshintCommand extends ContainerAwareCommand
     private function findFilesWhichAreNotIgnored($location, $ignoredFiles)
     {
         $notIgnoredFiles = array();
-        $iteratedFiles = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($location),
-            RecursiveIteratorIterator::SELF_FIRST
-        );
+        $iteratedFiles = $this->getAllFiles($location);
 
         foreach ($iteratedFiles as $iteratedFile) {
             if (!in_array($iteratedFile, $ignoredFiles)) {
@@ -100,6 +103,27 @@ class LintJshintCommand extends ContainerAwareCommand
         }
 
         return $matchedFiles;
+    }
+
+    private function getAllFiles($location)
+    {
+        if (!isset($this->allFiles[$location])) {
+            $this->allFiles[$location] = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($location),
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+        }
+        return $this->allFiles[$location];
+    }
+
+    private function convertIteratorToArray($iterator)
+    {
+        $result = array();
+        foreach ($iterator as $i) {
+            $result[] = (string)$i;
+        }
+
+        return $result;
     }
 
     private function displayResult($returnValue, $output)

@@ -17,7 +17,7 @@ class LintPackExtensionTest extends LintPackTestCase
         $this->assertEquals('test-jshint', $jshintConfig['bin']);
         $this->assertEquals('/tmp/.jshintrc', $jshintConfig['jshintrc']);
         $this->assertEquals(array('js', 'javascript'), $jshintConfig['extensions']);
-        $this->assertEquals(array('r.js', '*/jquery.js'), $jshintConfig['ignores']);
+        $this->assertEquals(array('@r.js$@', '@s[^/]+/jquery.js@'), $jshintConfig['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures'), $jshintConfig['locations']);
     }
 }

@@ -56,6 +56,4 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
     {
         return Yaml::parse(TESTS_PATH.'/fixtures/config.yml');
     }
-
-
 }

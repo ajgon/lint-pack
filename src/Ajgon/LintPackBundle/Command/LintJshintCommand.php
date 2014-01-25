@@ -28,7 +28,8 @@ class LintJshintCommand extends ContainerAwareCommand
         $process = new Process($command);
 
         $output->writeln($command);
-        $returnValue = $process->run();
+	$returnValue = $process->run();
+	$output->writeln($process->getOutput());
 
         $this->displayResult($returnValue, $output);
         return $returnValue;

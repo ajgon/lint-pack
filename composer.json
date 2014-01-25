@@ -17,7 +17,7 @@
         "symfony/process": ">=2.4",
 	"symfony/console": ">=2.4"
     },
-    "target-dir": "Ajgon/LintPackBundle",
+    "target-dir": "",
     "autoload": {
         "psr-0": {
             "Ajgon\\LintPackBundle": "src/"

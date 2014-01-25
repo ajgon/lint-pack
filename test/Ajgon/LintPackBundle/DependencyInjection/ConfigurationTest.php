@@ -18,13 +18,13 @@ class ConfigurationTest extends LintPackTestCase
         $configValues = $this->processor->processConfiguration($this->config, array());
         $this->assertFalse($configValues['jshint']['enabled']);
         $this->assertEquals('jshint', $configValues['jshint']['bin']);
-        $this->assertEquals('%kernel.root_dir%/.jshintrc', $configValues['jshint']['jshintrc']);
+        $this->assertEquals('%kernel.root_dir%/../.jshintrc', $configValues['jshint']['jshintrc']);
         $this->assertEquals(array('js'), $configValues['jshint']['extensions']);
         $this->assertEquals(array(), $configValues['jshint']['ignores']);
         $this->assertEquals(
             array(
-                '%kernel.root_dir%/app',
-                '%kernel.root_dir%/src'
+                '%kernel.root_dir%',
+                '%kernel.root_dir%/../src'
             ),
             $configValues['jshint']['locations']
         );

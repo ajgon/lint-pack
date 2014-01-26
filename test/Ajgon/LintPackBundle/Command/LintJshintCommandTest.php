@@ -14,9 +14,8 @@ class LintJshintCommandTest extends LintPackTestCase
 {
     public function setUp()
     {
+        $this->command = new LintJshintCommand();
         parent::setUp();
-
-        $this->initWithConfig();
     }
 
     public function testIfCommandHasGoodName()
@@ -70,14 +69,6 @@ class LintJshintCommandTest extends LintPackTestCase
 
         $this->initWithConfig($config);
         $this->assertEquals($this->getProperCommand($config), $this->command->getCommand());
-    }
-
-    private function initWithConfig($config = null)
-    {
-        $this->command = new LintJshintCommand();
-        $container = $this->getContainerBuilder();
-        $this->loadConfigToContainer($container, $config, true);
-        $this->command->setContainer($container);
     }
 
     private function getProperCommand($config = null)

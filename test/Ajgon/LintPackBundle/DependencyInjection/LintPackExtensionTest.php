@@ -5,9 +5,15 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
 
 use Ajgon\LintPackBundle\Test\LintPackTestCase;
+use Ajgon\LintPackBundle\Command\LintJshintCommand;
 
 class LintPackExtensionTest extends LintPackTestCase
 {
+    public function setUp()
+    {
+        $this->extension = new LintPackExtension();
+    }
+
     public function testIfJshintValuesWereLoadedToContainer()
     {
         $container = $this->getContainerBuilder();

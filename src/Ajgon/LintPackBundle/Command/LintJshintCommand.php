@@ -18,7 +18,7 @@ class LintJshintCommand extends ContainerAwareCommand
     {
         $this
             ->setName('lint:jshint')
-            ->setDescription('Lint all src/*.js and app/*.js files with jshint');
+            ->setDescription('Lint all files with jshint');
     }
 
     /**

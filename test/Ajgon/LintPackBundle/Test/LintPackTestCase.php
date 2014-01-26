@@ -13,6 +13,14 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->extension = new LintPackExtension();
+        $this->initWithConfig();
+    }
+
+    protected function initWithConfig($config = null)
+    {
+        $container = $this->getContainerBuilder();
+        $this->loadConfigToContainer($container, $config, true);
+        $this->command->setContainer($container);
     }
 
     protected function loadConfigToContainer(&$container, $config = null, $parseDir = false)

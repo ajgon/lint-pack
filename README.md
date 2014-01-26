@@ -61,7 +61,7 @@ lint_pack:
         # required: no, default: "jshint"
         bin: "/somewhere/something/jshint"
         # Path to the .jshintrc configuration file
-        # required: no, default: "%kernel.root_dir%/../.jshintrc"
+        # required: no, default: ""
         jshintrc: "/tmp/.jshintrc"
         # List of extensions which will be included for parsing
         # required: no, default: ["js"]

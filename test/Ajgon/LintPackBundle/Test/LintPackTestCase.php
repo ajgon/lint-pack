@@ -5,8 +5,10 @@ use PHPUnit_Framework_TestCase;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Config\Definition\Processor;
 
 use Ajgon\LintPackBundle\DependencyInjection\LintPackExtension;
+use Ajgon\LintPackBundle\DependencyInjection\Configuration;
 
 class LintPackTestCase extends PHPUnit_Framework_TestCase
 {
@@ -23,9 +25,17 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
         $this->command->setContainer($container);
     }
 
+    protected function initWithoutConfig()
+    {
+        $config = $this->getDefaultConfig();
+        $container = $this->getContainerBuilder();
+        $this->loadConfigToContainer($container, $config, true);
+        $this->command->setContainer($container);
+    }
+
     protected function loadConfigToContainer(&$container, $config = null, $parseDir = false)
     {
-        if (!$config) {
+        if (is_null($config)) {
             $config = $this->getTestConfig();
         }
 
@@ -62,6 +72,12 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
         $container->setParameter('kernel.bundles', $bundles);
 
         return $container;
+    }
+
+    protected function getDefaultConfig()
+    {
+        $processor = new Processor();
+        return array('lint_pack' => $processor->processConfiguration(new Configuration(), array()));
     }
 
     protected function getTestConfig()

@@ -21,7 +21,6 @@ class Configuration implements ConfigurationInterface
                         ->cannotBeEmpty()
                     ->end()
                     ->scalarNode('jshintrc')
-                        ->defaultValue('%kernel.root_dir%/../.jshintrc')
                     ->end()
                     ->arrayNode('extensions')
                         ->defaultValue(array('js'))

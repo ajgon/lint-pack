@@ -25,7 +25,24 @@ class LintJshintCommandTest extends LintPackTestCase
 
     public function testIfProperCommandIsBuilt()
     {
-        $this->assertEquals($this->getProperCommand(), $this->command->getCommand());
+        $this->assertEquals(
+            $this->getProperCommand($this->getTestConfig()),
+            $this->command->getCommand()
+        );
+    }
+
+    public function testIfProperCommandIsBuiltForDefaults()
+    {
+        $this->command = new LintJshintCommand();
+        $this->initWithoutConfig();
+
+        $this->assertEquals(
+            $this->getProperCommand(
+                $this->getDefaultConfig(),
+                $this->getValidFiles('/\.js$/')
+            ),
+            $this->command->getCommand()
+        );
     }
 
     public function testIfProcessExecutesCorrectly()
@@ -71,17 +88,15 @@ class LintJshintCommandTest extends LintPackTestCase
         $this->assertEquals($this->getProperCommand($config), $this->command->getCommand());
     }
 
-    private function getProperCommand($config = null)
+    private function getProperCommand($config, $goodFiles = null)
     {
-        if (!$config) {
-            $config = $this->getTestConfig();
+        if (is_null($goodFiles)) {
+            $goodFiles = $this->getValidFiles('/(?:.*file\.j.*)|(?:fixtures.jshint.jquery)/');
         }
-
         $jshintConfig = $config['lint_pack']['jshint'];
-        $goodFiles = $this->getValidFiles();
 
         return $jshintConfig['bin'] .
-               ($jshintConfig['jshintrc'] ? ' --config ' . $jshintConfig['jshintrc'] : '') .
+               (isset($jshintConfig['jshintrc']) ? ' --config ' . $jshintConfig['jshintrc'] : '') .
                ($jshintConfig['locations'] ? ' ' . implode(' ', $goodFiles) : '');
     }
 
@@ -96,7 +111,7 @@ class LintJshintCommandTest extends LintPackTestCase
         return array($returnValue, $output);
     }
 
-    private function getValidFiles()
+    private function getValidFiles($match = '/.*/')
     {
         $goodFiles = array();
         $files = new RecursiveIteratorIterator(
@@ -108,7 +123,7 @@ class LintJshintCommandTest extends LintPackTestCase
 
         foreach ($files as $file) {
             $file = (string)$file;
-            if (preg_match('/(?:.*file\.j.*)|(?:fixtures.jshint.jquery)/', $file)) {
+            if (preg_match($match, $file)) {
                 $goodFiles[] = $file;
             }
         }

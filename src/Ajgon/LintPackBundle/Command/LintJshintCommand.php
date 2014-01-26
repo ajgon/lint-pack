@@ -46,7 +46,7 @@ class LintJshintCommand extends ContainerAwareCommand
 
         return trim(
             $config['bin'] .
-            ($config['jshintrc'] ? ' --config ' . $config['jshintrc'] : '') .
+            ((isset($config['jshintrc']) && $config['jshintrc']) ? ' --config ' . $config['jshintrc'] : '') .
             ' ' .
             implode(' ', $files)
         );

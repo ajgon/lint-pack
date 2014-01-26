@@ -32,14 +32,14 @@ class ConfigurationTest extends LintPackTestCase
 
     public function testIfJshintConfigContainsCustomValues()
     {
-        $configFromYaml = Yaml::parse(TESTS_PATH.'/fixtures/config.yml');
-        $configValues = $this->processor->processConfiguration($this->config, $configFromYaml);
+        $config = $this->getTestConfig();
+        $configValues = $this->processor->processConfiguration($this->config, $config);
 
         $this->assertTrue($configValues['jshint']['enabled']);
         $this->assertEquals('test-jshint', $configValues['jshint']['bin']);
         $this->assertEquals('/tmp/.jshintrc', $configValues['jshint']['jshintrc']);
         $this->assertEquals(array('js', 'javascript'), $configValues['jshint']['extensions']);
-        $this->assertEquals(array('@r.js$@', '@s[^/]+/jquery.js@'), $configValues['jshint']['ignores']);
-        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures'), $configValues['jshint']['locations']);
+        $this->assertEquals(array('@r.js$@', '@/s[^/]+/jquery.js@'), $configValues['jshint']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/jshint'), $configValues['jshint']['locations']);
     }
 }

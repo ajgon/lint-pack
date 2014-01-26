@@ -18,6 +18,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('bin')
                         ->defaultValue('jshint')
+                        ->cannotBeEmpty()
                     ->end()
                     ->scalarNode('jshintrc')
                         ->defaultValue('%kernel.root_dir%/../.jshintrc')

@@ -44,10 +44,12 @@ class LintJshintCommand extends ContainerAwareCommand
         $extensions = '/(?:\.' . implode('$)|(?:\.', $config['extensions']) . '$)/';
         $files = $this->getFilesMatching($config['locations'], $config['ignores'], $extensions);
 
-        return $config['bin'] .
-               ' --config ' .
-               $config['jshintrc'] . ' ' .
-               implode(' ', $files);
+        return trim(
+            $config['bin'] .
+            ($config['jshintrc'] ? ' --config ' . $config['jshintrc'] : '') .
+            ' ' .
+            implode(' ', $files)
+        );
     }
 
     private function getFilesMatching($locations, $ignoresRegexpes, $extensionsRegexp)

@@ -7,6 +7,6 @@ lint_pack:
             - javascript
         ignores:
             - "@r.js$@"
-            - "@s[^/]+/jquery.js@"
+            - "@/s[^/]+/jquery.js@"
         locations:
-            - %kernel.root_dir%/../test/fixtures
+            - %kernel.root_dir%/../test/fixtures/jshint

@@ -51,6 +51,27 @@ class LintJshintCommandTest extends LintPackTestCase
         $this->assertEquals($this->getProperCommand($config) . "\nCommand failed.\n\n", $output->fetch());
     }
 
+    public function testConfigurationWithEmptyBin()
+    {
+        $this->setExpectedException(
+            'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException',
+            'The path "lint_pack.jshint.bin" cannot contain an empty value, but got null.',
+            0
+        );
+
+        $config = $this->getTestConfig();
+        $config['lint_pack']['jshint']['bin'] = null;
+        $this->initWithConfig($config);
+    }
+
+    public function testEmptyConfiguration()
+    {
+        $config = $this->getEmptyTestConfig();
+
+        $this->initWithConfig($config);
+        $this->assertEquals($this->getProperCommand($config), $this->command->getCommand());
+    }
+
     private function initWithConfig($config = null)
     {
         $this->command = new LintJshintCommand();
@@ -68,7 +89,9 @@ class LintJshintCommandTest extends LintPackTestCase
         $jshintConfig = $config['lint_pack']['jshint'];
         $goodFiles = $this->getValidFiles();
 
-        return $jshintConfig['bin'] . ' --config ' . $jshintConfig['jshintrc'] . ' ' . implode(' ', $goodFiles);
+        return $jshintConfig['bin'] .
+               ($jshintConfig['jshintrc'] ? ' --config ' . $jshintConfig['jshintrc'] : '') .
+               ($jshintConfig['locations'] ? ' ' . implode(' ', $goodFiles) : '');
     }
 
     private function executeClassWithConfig($config)
@@ -86,13 +109,15 @@ class LintJshintCommandTest extends LintPackTestCase
     {
         $goodFiles = array();
         $files = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(TESTS_PATH . DIRECTORY_SEPARATOR . 'fixtures'),
+            new RecursiveDirectoryIterator(
+                TESTS_PATH . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'jshint'
+            ),
             RecursiveIteratorIterator::SELF_FIRST
         );
 
         foreach ($files as $file) {
             $file = (string)$file;
-            if (preg_match('/(?:.*file\.j.*)|(?:fixtures.jquery)/', $file)) {
+            if (preg_match('/(?:.*file\.j.*)|(?:fixtures.jshint.jquery)/', $file)) {
                 $goodFiles[] = $file;
             }
         }

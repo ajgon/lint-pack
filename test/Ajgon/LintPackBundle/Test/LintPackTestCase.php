@@ -32,6 +32,10 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
     {
         $results = array();
 
+        if (!is_array($dirs)) {
+            return $results;
+        }
+
         foreach ($dirs as $dir) {
             $results[] = realpath(str_replace('%kernel.root_dir%', TESTS_PATH, $dir));
         }
@@ -55,5 +59,10 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
     protected function getTestConfig()
     {
         return Yaml::parse(TESTS_PATH.'/fixtures/config.yml');
+    }
+
+    protected function getEmptyTestConfig()
+    {
+        return Yaml::parse(TESTS_PATH.'/fixtures/config-empty.yml');
     }
 }

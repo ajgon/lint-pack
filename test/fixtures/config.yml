@@ -34,3 +34,14 @@ lint_pack:
         ignores: ~
         locations:
             - %kernel.root_dir%/../test/fixtures/phpmd/good
+    phpcpd:
+        bin: vendor/bin/phpcpd
+        min_lines: 4
+        min_tokens: 60
+        extensions:
+            - php
+            - php5
+        ignores:
+            - ignore.php
+        locations:
+            - %kernel.root_dir%/../test/fixtures/phpcpd

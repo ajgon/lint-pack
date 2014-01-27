@@ -116,6 +116,34 @@ lint_pack:
             - "%kernel.root_dir%/my-source"
 ```
 
+### phpcpd
+```yml
+lint_pack:
+    phpcpd:
+        # Path to the phpcs binary.
+        # required: yes, default: "phpcs"
+        bin: "vendor/bin/phpcpd"
+        # Minimum number of identical lines.
+        # required: no, default: 5
+        min_lines: 4
+        # Minimum number of identical tokens.
+        # required: no, default: 70
+        min_tokens: 60
+        # List of extensions which will be included for parsing
+        # required: no, default: ["php"]
+        extensions:
+            - php
+            - php5
+        # List of filespaths to ignore.
+        # required: no, default: []
+        ignores:
+            - ignore.php
+        # List of locations scanned for files.
+        # required: no, default: ["%kernel.root_dir%/../src"]
+        locations:
+            - "%kernel.root_dir%/my-source"
+```
+
 ### phpmd
 
 ```yml
@@ -155,6 +183,7 @@ lint
   lint:all                              Lint all files with all linters
   lint:jshint                           Lint all files with jshint
   lint:phpcs                            Lint all files with phpcs
+  lint:phpcpd                           Lint all files with phpcpd
   lint:phpmd                            Lint all files with phpmd
 ```
 
@@ -164,6 +193,7 @@ To use specific linter, just launch it, e.g. `php app/console lint:jshint`.
 
     php vendor/bin/phpcs --standard=PSR2 --extensions=php src/ -p
     php vendor/bin/phpmd --suffixes php src/* text codesize,controversial,design,unusedcode,naming
+    php vendor/bin/phpcpd src
     php vendor/bin/phpunit --coverage-text
 
 ## Credits

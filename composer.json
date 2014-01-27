@@ -20,7 +20,8 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "1.*",
         "phpunit/phpunit": "3.7.*",
-        "phpmd/phpmd" : "1.4.*"
+        "phpmd/phpmd" : "1.4.*",
+        "sebastian/phpcpd": "*"
     },
     "target-dir": "",
     "autoload": {
@@ -29,7 +30,8 @@
         }
     },
     "suggest": {
-        "squizlabs/php_codesniffer": "Set lint_pack.phpcs.bin = vendor/bin/phpcs and you have embeded phpcs out of the box",
-        "phpmd/phpmd": "Set lint_pack.phpmd.bin = vendor/bin/phpmd and you have embeded phpmd out of the box"
+        "squizlabs/php_codesniffer": "Set lint_pack.phpcs.bin = bin/phpcs and you have embeded phpcs out of the box",
+        "phpmd/phpmd": "Set lint_pack.phpmd.bin = bin/phpmd and you have embeded phpmd out of the box",
+        "sebastian/phpcpd": "Set lint_pack.phpcpd.bin = bin/phpcpd and you have embeded phpcpd out of the box"
     }
 }

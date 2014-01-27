@@ -57,4 +57,18 @@ class LintPackExtensionTest extends LintPackTestCase
         $this->assertEquals(array(), $phpmdConfig['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/phpmd/good'), $phpmdConfig['locations']);
     }
+
+    public function testIfPhpcpdValuesWereLoadedToContainer()
+    {
+        $container = $this->getContainerBuilder();
+        $this->loadConfigToContainer($container);
+        $phpcpdConfig = $container->getParameter('lint_pack.phpcpd');
+
+        $this->assertEquals('vendor/bin/phpcpd', $phpcpdConfig['bin']);
+        $this->assertEquals('4', $phpcpdConfig['min_lines']);
+        $this->assertEquals('60', $phpcpdConfig['min_tokens']);
+        $this->assertEquals(array('php', 'php5'), $phpcpdConfig['extensions']);
+        $this->assertEquals(array('ignore.php'), $phpcpdConfig['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/phpcpd'), $phpcpdConfig['locations']);
+    }
 }

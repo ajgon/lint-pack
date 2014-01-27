@@ -24,3 +24,11 @@ lint_pack:
         ignores: ~
         locations:
             - %kernel.root_dir%/../test/fixtures/phpcs
+    phpcpd:
+        bin: vendor/bin/phpcpd
+        min_lines: ~
+        min_tokens: ~
+        extensions: ~
+        ignores: ~
+        locations:
+            - %kernel.root_dir%/../test/fixtures/phpcpd

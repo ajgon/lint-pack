@@ -1,0 +1,2 @@
+<?php
+mysql_connect(...);

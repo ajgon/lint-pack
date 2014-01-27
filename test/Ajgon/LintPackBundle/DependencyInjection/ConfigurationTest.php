@@ -108,4 +108,31 @@ class ConfigurationTest extends LintPackTestCase
             $configValues['phpmd']['locations']
         );
     }
+
+    public function testIfPhpcpdConfigContainsDefaultValues()
+    {
+        $configValues = $this->processor->processConfiguration($this->config, array());
+
+        $this->assertFalse($configValues['phpcpd']['enabled']);
+        $this->assertEquals('phpcpd', $configValues['phpcpd']['bin']);
+        $this->assertEquals('5', $configValues['phpcpd']['min_lines']);
+        $this->assertEquals('70', $configValues['phpcpd']['min_tokens']);
+        $this->assertEquals(array('php'), $configValues['phpcpd']['extensions']);
+        $this->assertEquals(array(), $configValues['phpcpd']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../src'), $configValues['phpcpd']['locations']);
+    }
+
+    public function testIfPhpcpdConfigContainsCustomValues()
+    {
+        $config = $this->getTestConfig();
+        $configValues = $this->processor->processConfiguration($this->config, $config);
+
+        $this->assertTrue($configValues['phpcpd']['enabled']);
+        $this->assertEquals('vendor/bin/phpcpd', $configValues['phpcpd']['bin']);
+        $this->assertEquals('4', $configValues['phpcpd']['min_lines']);
+        $this->assertEquals('60', $configValues['phpcpd']['min_tokens']);
+        $this->assertEquals(array('php', 'php5'), $configValues['phpcpd']['extensions']);
+        $this->assertEquals(array('ignore.php'), $configValues['phpcpd']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/phpcpd'), $configValues['phpcpd']['locations']);
+    }
 }

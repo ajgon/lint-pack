@@ -74,4 +74,38 @@ class ConfigurationTest extends LintPackTestCase
         $this->assertEquals(array('ignore.php'), $configValues['phpcs']['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/phpcs'), $configValues['phpcs']['locations']);
     }
+
+    public function testIfPhpmdConfigContainsDefaultValues()
+    {
+        $configValues = $this->processor->processConfiguration($this->config, array());
+
+        $this->assertFalse($configValues['phpmd']['enabled']);
+        $this->assertEquals('phpmd', $configValues['phpmd']['bin']);
+        $this->assertEquals(
+            array('codesize', 'controversial', 'design', 'naming', 'unusedcode'),
+            $configValues['phpmd']['rulesets']
+        );
+        $this->assertEquals(array('php'), $configValues['phpmd']['extensions']);
+        $this->assertEquals(array(), $configValues['phpmd']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../src'), $configValues['phpmd']['locations']);
+    }
+
+    public function testIfPhpmdConfigContainsCustomValues()
+    {
+        $config = $this->getTestConfig();
+        $configValues = $this->processor->processConfiguration($this->config, $config);
+
+        $this->assertTrue($configValues['phpmd']['enabled']);
+        $this->assertEquals('vendor/bin/phpmd', $configValues['phpmd']['bin']);
+        $this->assertEquals(
+            array('naming', 'controversial'),
+            $configValues['phpmd']['rulesets']
+        );
+        $this->assertEquals(array('php', 'php5'), $configValues['phpmd']['extensions']);
+        $this->assertEquals(array(), $configValues['phpmd']['ignores']);
+        $this->assertEquals(
+            array('%kernel.root_dir%/../test/fixtures/phpmd/good'),
+            $configValues['phpmd']['locations']
+        );
+    }
 }

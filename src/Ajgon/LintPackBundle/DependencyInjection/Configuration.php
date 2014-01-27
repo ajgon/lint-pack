@@ -6,6 +6,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
+    /**
+     * {@inheritDoc}
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
@@ -57,6 +61,37 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->scalarNode('standard')
                             ->defaultValue('PSR2')
+                        ->end()
+                        ->arrayNode('extensions')
+                            ->defaultValue(array('php'))
+                            ->prototype('scalar')
+                            ->end()
+                        ->end()
+                        ->arrayNode('ignores')
+                            ->defaultValue(array())
+                            ->prototype('scalar')
+                            ->end()
+                        ->end()
+                        ->arrayNode('locations')
+                            ->defaultValue(array('%kernel.root_dir%/../src'))
+                            ->requiresAtLeastOneElement()
+                            ->prototype('scalar')
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('phpmd')
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('bin')
+                            ->defaultValue('phpmd')
+                            ->cannotBeEmpty()
+                        ->end()
+                        ->arrayNode('rulesets')
+                            ->defaultValue(array('codesize', 'controversial', 'design', 'naming', 'unusedcode'))
+                            ->requiresAtLeastOneElement()
+                            ->prototype('scalar')
+                            ->end()
                         ->end()
                         ->arrayNode('extensions')
                             ->defaultValue(array('php'))

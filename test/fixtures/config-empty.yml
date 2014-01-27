@@ -16,3 +16,11 @@ lint_pack:
         ignores: ~
         locations:
             - %kernel.root_dir%/../test/fixtures/phpcs
+    phpmd:
+        bin: vendor/bin/phpmd
+        rulesets:
+            - naming
+        extensions: ~
+        ignores: ~
+        locations:
+            - %kernel.root_dir%/../test/fixtures/phpcs

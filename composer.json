@@ -28,9 +28,8 @@
             "Ajgon\\LintPackBundle": "src/"
         }
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
+    "suggest": {
+        "squizlabs/php_codesniffer": "Set lint_pack.phpcs.bin = vendor/bin/phpcs and you have embeded phpcs out of the box",
+        "phpmd/phpmd": "Set lint_pack.phpmd.bin = vendor/bin/phpmd and you have embeded phpmd out of the box"
     }
 }

@@ -84,12 +84,13 @@ lint_pack:
 ```
 
 ### phpcs
+
 ```yml
 lint_pack:
     phpcs:
         # Path to the phpcs binary.
         # required: yes, default: "phpcs"
-        bin: vendor/bin/phpcs
+        bin: "vendor/bin/phpcs"
         # Display warnings?
         # required: no, default: false
         warnings: false
@@ -108,11 +109,39 @@ lint_pack:
         # List of filespaths to ignore.
         # required: no, default: []
         ignores:
-            - ignore.php
+            - "ignore.php"
         # List of locations scanned for files.
         # required: no, default: ["%kernel.root_dir%/../src"]
         locations:
-            - %kernel.root_dir%/../test/fixtures/phpcs
+            - "%kernel.root_dir%/my-source"
+```
+
+### phpmd
+
+```yml
+lint_pack:
+    phpmd:
+        # Path to the phpcs binary.
+        # required: yes, default: "phpmd"
+        bin: "vendor/bin/phpmd"
+        # List of rulesets passed to the phpmd.
+        # required: yes, default: ["codesize", "controversial", "design", "naming", "unusedcode"]
+        rulesets:
+            - naming
+            - controversial
+        # List of extensions which will be included for parsing
+        # required: no, default: ["php"]
+        extensions:
+            - php
+            - php5
+        # List of filespaths to ignore.
+        # required: no, default: []
+        ignores:
+            - "ignore.php"
+        # List of locations scanned for files.
+        # required: no, default: ["%kernel.root_dir%/../src"]
+        locations:
+            - "%kernel.root_dir%/my-source"
 ```
 
 ## Usage
@@ -126,6 +155,7 @@ lint
   lint:all                              Lint all files with all linters
   lint:jshint                           Lint all files with jshint
   lint:phpcs                            Lint all files with phpcs
+  lint:phpmd                            Lint all files with phpmd
 ```
 
 To use specific linter, just launch it, e.g. `php app/console lint:jshint`.
@@ -133,7 +163,7 @@ To use specific linter, just launch it, e.g. `php app/console lint:jshint`.
 ## Testing
 
     php vendor/bin/phpcs --standard=PSR2 --extensions=php src/ -p
-    php vendor/bin/phpmd --suffixes php src text codesize,controversial,design,unusedcode,naming
+    php vendor/bin/phpmd --suffixes php src/* text codesize,controversial,design,unusedcode,naming
     php vendor/bin/phpunit --coverage-text
 
 ## Credits

@@ -22,8 +22,9 @@ class LintCommand extends ContainerAwareCommand
     {
         $jshintReturnCode = $this->launchTask('lint:jshint', $input, $output);
         $phpcsReturnCode = $this->launchTask('lint:phpcs', $input, $output);
+        $phpmdReturnCode = $this->launchTask('lint:phpmd', $input, $output);
 
-        return max($jshintReturnCode, $phpcsReturnCode);
+        return max($jshintReturnCode, $phpcsReturnCode, $phpmdReturnCode);
     }
 
     protected function executeCommand(OutputInterface $output)

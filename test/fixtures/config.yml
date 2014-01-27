@@ -23,3 +23,14 @@ lint_pack:
             - ignore.php
         locations:
             - %kernel.root_dir%/../test/fixtures/phpcs
+    phpmd:
+        bin: vendor/bin/phpmd
+        rulesets:
+            - naming
+            - controversial
+        extensions:
+            - php
+            - php5
+        ignores: ~
+        locations:
+            - %kernel.root_dir%/../test/fixtures/phpmd/good

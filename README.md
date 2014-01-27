@@ -57,16 +57,16 @@ This bundle configured under the `lint_pack` key in your application configurati
 lint_pack:
     # Section for jshint options
     jshint:
-        # Path to the jshint binary
-        # required: no, default: "jshint"
+        # Path to the jshint binary.
+        # required: yes, default: "jshint"
         bin: "/somewhere/something/jshint"
-        # Path to the .jshintrc configuration file
+        # Path to the .jshintrc configuration file.
         # required: no, default: ""
         jshintrc: "/tmp/.jshintrc"
         # Path to jshintignore file, if set, disables "ignores" directive.
         # required: no, default: ""
         jshintignore: "/tmp/.jshintignore"
-        # List of extensions which will be included for parsing
+        # List of extensions which will be included for parsing.
         # required: no, default: ["js"]
         extensions:
             - js
@@ -83,6 +83,38 @@ lint_pack:
             - "%kernel.root_dir%/my-assets"
 ```
 
+### phpcs
+```yml
+lint_pack:
+    phpcs:
+        # Path to the phpcs binary.
+        # required: yes, default: "phpcs"
+        bin: vendor/bin/phpcs
+        # Display warnings?
+        # required: no, default: false
+        warnings: false
+        # Enable recursion over directories?
+        # required: no, default: true
+        recursion: false
+        # Coding standard against which files will be checked.
+        # Can contain ruleset path.
+        # required: false, default: PSR2
+        standard: PEAR
+        # List of extensions which will be included for parsing
+        # required: no, default: ["php"]
+        extensions:
+            - php
+            - php5
+        # List of filespaths to ignore.
+        # required: no, default: []
+        ignores:
+            - ignore.php
+        # List of locations scanned for files.
+        # required: no, default: ["%kernel.root_dir%/../src"]
+        locations:
+            - %kernel.root_dir%/../test/fixtures/phpcs
+```
+
 ## Usage
 
 This extension will add a new group `lint` to `app/console` task list:
@@ -91,7 +123,8 @@ This extension will add a new group `lint` to `app/console` task list:
 $ php app/console
 ...
 lint
-  lint:jshint                           Lint all src/*.js and app/*.js files with jshint
+  lint:jshint                           Lint all files with jshint
+  lint:phpcs                            Lint all files with phpcs
 ```
 
 To use specific linter, just launch it, e.g. `php app/console lint:jshint`.

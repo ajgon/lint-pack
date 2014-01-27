@@ -4,10 +4,6 @@ namespace Ajgon\LintPackBundle\Command;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Yaml\Yaml;
-
 use Ajgon\LintPackBundle\Test\LintPackTestCase;
 
 class LintJshintCommandTest extends LintPackTestCase
@@ -130,17 +126,6 @@ class LintJshintCommandTest extends LintPackTestCase
         return $jshintConfig['bin'] .
                (isset($jshintConfig['jshintrc']) ? ' --config ' . $jshintConfig['jshintrc'] : '') .
                ($jshintConfig['locations'] ? ' ' . implode(' ', $goodFiles) : '');
-    }
-
-    private function executeClassWithConfig($config)
-    {
-        $this->initWithConfig($config);
-
-        $input = new ArrayInput(array());
-        $output = new BufferedOutput();
-
-        $returnValue = $this->command->execute($input, $output);
-        return array($returnValue, $output);
     }
 
     private function getValidFiles($match = '/.*/')

@@ -16,6 +16,7 @@ class ConfigurationTest extends LintPackTestCase
     public function testIfJshintConfigContainsDefaultValues()
     {
         $configValues = $this->processor->processConfiguration($this->config, array());
+
         $this->assertFalse($configValues['jshint']['enabled']);
         $this->assertEquals('jshint', $configValues['jshint']['bin']);
         $this->assertFalse(isset($configValues['jshint']['jshintrc']));
@@ -43,5 +44,34 @@ class ConfigurationTest extends LintPackTestCase
         $this->assertEquals(array('js', 'javascript'), $configValues['jshint']['extensions']);
         $this->assertEquals(array('@r.js$@', '@/s[^/]+/jquery.js@'), $configValues['jshint']['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/jshint'), $configValues['jshint']['locations']);
+    }
+
+    public function testIfPhpcsConfigContainsDefaultValues()
+    {
+        $configValues = $this->processor->processConfiguration($this->config, array());
+
+        $this->assertFalse($configValues['phpcs']['enabled']);
+        $this->assertEquals('phpcs', $configValues['phpcs']['bin']);
+        $this->assertFalse($configValues['phpcs']['warnings']);
+        $this->assertTrue($configValues['phpcs']['recursion']);
+        $this->assertEquals('PSR2', $configValues['phpcs']['standard']);
+        $this->assertEquals(array('php'), $configValues['phpcs']['extensions']);
+        $this->assertEquals(array(), $configValues['phpcs']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../src'), $configValues['phpcs']['locations']);
+    }
+
+    public function testIfPhpcsConfigContainsCustomValues()
+    {
+        $config = $this->getTestConfig();
+        $configValues = $this->processor->processConfiguration($this->config, $config);
+
+        $this->assertTrue($configValues['phpcs']['enabled']);
+        $this->assertEquals('vendor/bin/phpcs', $configValues['phpcs']['bin']);
+        $this->assertFalse($configValues['phpcs']['warnings']);
+        $this->assertFalse($configValues['phpcs']['recursion']);
+        $this->assertEquals('PEAR', $configValues['phpcs']['standard']);
+        $this->assertEquals(array('php', 'php5'), $configValues['phpcs']['extensions']);
+        $this->assertEquals(array('ignore.php'), $configValues['phpcs']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/phpcs'), $configValues['phpcs']['locations']);
     }
 }

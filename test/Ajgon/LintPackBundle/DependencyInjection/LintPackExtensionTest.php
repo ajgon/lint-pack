@@ -26,4 +26,19 @@ class LintPackExtensionTest extends LintPackTestCase
         $this->assertEquals(array('@r.js$@', '@/s[^/]+/jquery.js@'), $jshintConfig['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/jshint'), $jshintConfig['locations']);
     }
+
+    public function testIfPhpcsValuesWereLoadedToContainer()
+    {
+        $container = $this->getContainerBuilder();
+        $this->loadConfigToContainer($container);
+        $phpcsConfig = $container->getParameter('lint_pack.phpcs');
+
+        $this->assertEquals('vendor/bin/phpcs', $phpcsConfig['bin']);
+        $this->assertFalse($phpcsConfig['warnings']);
+        $this->assertFalse($phpcsConfig['recursion']);
+        $this->assertEquals('PEAR', $phpcsConfig['standard']);
+        $this->assertEquals(array('php', 'php5'), $phpcsConfig['extensions']);
+        $this->assertEquals(array('ignore.php'), $phpcsConfig['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/phpcs'), $phpcsConfig['locations']);
+    }
 }

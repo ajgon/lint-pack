@@ -13,5 +13,6 @@ class LintPackExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('lint_pack.jshint', $config['jshint']);
+        $container->setParameter('lint_pack.phpcs', $config['phpcs']);
     }
 }

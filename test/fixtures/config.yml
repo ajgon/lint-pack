@@ -11,3 +11,15 @@ lint_pack:
             - "@/s[^/]+/jquery.js@"
         locations:
             - %kernel.root_dir%/../test/fixtures/jshint
+    phpcs:
+        bin: vendor/bin/phpcs
+        warnings: false
+        recursion: false
+        standard: PEAR
+        extensions:
+            - php
+            - php5
+        ignores:
+            - ignore.php
+        locations:
+            - %kernel.root_dir%/../test/fixtures/phpcs

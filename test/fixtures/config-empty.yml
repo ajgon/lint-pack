@@ -6,3 +6,11 @@ lint_pack:
         extensions: ~
         ignores: ~
         locations: ~
+    phpcs:
+        bin: vendor/bin/phpcs
+        warnings: ~
+        recursion: ~
+        standard: ~
+        extensions: ~
+        ignores: ~
+        locations: ~

@@ -6,6 +6,8 @@ use PHPUnit_Framework_TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 use Ajgon\LintPackBundle\DependencyInjection\LintPackExtension;
 use Ajgon\LintPackBundle\DependencyInjection\Configuration;
@@ -44,6 +46,17 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
                 $this->parseConfigDirs($config['lint_pack']['jshint']['locations']);
         }
         $this->extension->load($config, $container);
+    }
+
+    protected function executeClassWithConfig($config)
+    {
+        $this->initWithConfig($config);
+
+        $input = new ArrayInput(array());
+        $output = new BufferedOutput();
+
+        $returnValue = $this->command->execute($input, $output);
+        return array($returnValue, $output);
     }
 
     protected function parseConfigDirs($dirs)

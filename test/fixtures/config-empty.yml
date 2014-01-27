@@ -2,6 +2,7 @@ lint_pack:
     jshint:
         bin: test-jshint
         jshintrc: ~
+        jshintignore: ~
         extensions: ~
         ignores: ~
         locations: ~

@@ -22,6 +22,8 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->scalarNode('jshintrc')
                     ->end()
+                    ->scalarNode('jshintignore')
+                    ->end()
                     ->arrayNode('extensions')
                         ->defaultValue(array('js'))
                         ->prototype('scalar')

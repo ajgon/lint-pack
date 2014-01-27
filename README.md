@@ -63,6 +63,9 @@ lint_pack:
         # Path to the .jshintrc configuration file
         # required: no, default: ""
         jshintrc: "/tmp/.jshintrc"
+        # Path to jshintignore file, if set, disables "ignores" directive.
+        # required: no, default: ""
+        jshintignore: "/tmp/.jshintignore"
         # List of extensions which will be included for parsing
         # required: no, default: ["js"]
         extensions:

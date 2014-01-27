@@ -41,14 +41,33 @@ class LintJshintCommand extends ContainerAwareCommand
     public function getCommand()
     {
         $config = $this->getContainer()->getParameter('lint_pack.jshint');
+
+        if (isset($config['jshintignore']) && is_string($config['jshintignore'])) {
+            return $this->getCommandWithIgnore($config);
+        }
+        return $this->getCommandWithoutIgnore($config);
+    }
+
+    private function getCommandWithIgnore($config)
+    {
+        return trim(
+            $config['bin'] .
+            ((isset($config['jshintrc']) && $config['jshintrc']) ? ' --config ' . $config['jshintrc'] : '') .
+            ' --exclude-path ' . $config['jshintignore'] .
+            (!is_null($config['extensions']) ? ' --extra-ext ' . implode(',', $config['extensions']) : '') .
+            (!is_null($config['locations']) ? ' ' . implode(' ', $config['locations']) : '')
+        );
+    }
+
+    private function getCommandWithoutIgnore($config)
+    {
         $extensions = '/(?:\.' . implode('$)|(?:\.', $config['extensions']) . '$)/';
         $files = $this->getFilesMatching($config['locations'], $config['ignores'], $extensions);
 
         return trim(
             $config['bin'] .
             ((isset($config['jshintrc']) && $config['jshintrc']) ? ' --config ' . $config['jshintrc'] : '') .
-            ' ' .
-            implode(' ', $files)
+            ' ' . implode(' ', $files)
         );
     }
 

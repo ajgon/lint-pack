@@ -23,7 +23,20 @@ class LintJshintCommandTest extends LintPackTestCase
         $this->assertEquals('lint:jshint', $this->command->getName());
     }
 
-    public function testIfProperCommandIsBuilt()
+    public function testIfProperCommandIsBuiltWithoutIgnore()
+    {
+        $this->command = new LintJshintCommand();
+        $config = $this->getTestConfig();
+        unset($config['lint_pack']['jshint']['jshintignore']);
+        $this->initWithConfig($config);
+
+        $this->assertEquals(
+            $this->getProperCommand($config),
+            $this->command->getCommand()
+        );
+    }
+
+    public function testIfProperComandIsBuiltWithIgnore()
     {
         $this->assertEquals(
             $this->getProperCommand($this->getTestConfig()),
@@ -90,10 +103,29 @@ class LintJshintCommandTest extends LintPackTestCase
 
     private function getProperCommand($config, $goodFiles = null)
     {
+        $jshintConfig = $config['lint_pack']['jshint'];
+        $jshintConfig['locations'] = $this->parseConfigDirs($jshintConfig['locations']);
+
+        if (isset($jshintConfig['jshintignore'])) {
+            return $this->getProperCommandWithIgnore($jshintConfig);
+        }
+        return $this->getProperCommandWithoutIgnore($jshintConfig, $goodFiles);
+    }
+
+    private function getProperCommandWithIgnore($jshintConfig)
+    {
+        return $jshintConfig['bin'] .
+               (isset($jshintConfig['jshintrc']) ? ' --config ' . $jshintConfig['jshintrc'] : '') .
+               ' --exclude-path ' . $jshintConfig['jshintignore'] .
+               ' --extra-ext ' . implode(',', $jshintConfig['extensions']) .
+               ($jshintConfig['locations'] ? ' ' . implode(' ', $jshintConfig['locations']) : '');
+    }
+
+    private function getProperCommandWithoutIgnore($jshintConfig, $goodFiles = null)
+    {
         if (is_null($goodFiles)) {
             $goodFiles = $this->getValidFiles('/(?:.*file\.j.*)|(?:fixtures.jshint.jquery)/');
         }
-        $jshintConfig = $config['lint_pack']['jshint'];
 
         return $jshintConfig['bin'] .
                (isset($jshintConfig['jshintrc']) ? ' --config ' . $jshintConfig['jshintrc'] : '') .

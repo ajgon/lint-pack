@@ -46,7 +46,7 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
         $this->extension->load($config, $container);
     }
 
-    private function parseConfigDirs($dirs)
+    protected function parseConfigDirs($dirs)
     {
         $results = array();
 

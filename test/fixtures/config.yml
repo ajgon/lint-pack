@@ -43,5 +43,6 @@ lint_pack:
             - php5
         ignores:
             - ignore.php
+            - BadFile.php
         locations:
             - %kernel.root_dir%/../test/fixtures/phpcpd

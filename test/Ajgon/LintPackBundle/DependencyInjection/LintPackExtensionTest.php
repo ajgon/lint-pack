@@ -68,7 +68,7 @@ class LintPackExtensionTest extends LintPackTestCase
         $this->assertEquals('4', $phpcpdConfig['min_lines']);
         $this->assertEquals('60', $phpcpdConfig['min_tokens']);
         $this->assertEquals(array('php', 'php5'), $phpcpdConfig['extensions']);
-        $this->assertEquals(array('ignore.php'), $phpcpdConfig['ignores']);
+        $this->assertEquals(array('ignore.php', 'BadFile.php'), $phpcpdConfig['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/phpcpd'), $phpcpdConfig['locations']);
     }
 }

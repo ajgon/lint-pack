@@ -132,7 +132,7 @@ class ConfigurationTest extends LintPackTestCase
         $this->assertEquals('4', $configValues['phpcpd']['min_lines']);
         $this->assertEquals('60', $configValues['phpcpd']['min_tokens']);
         $this->assertEquals(array('php', 'php5'), $configValues['phpcpd']['extensions']);
-        $this->assertEquals(array('ignore.php'), $configValues['phpcpd']['ignores']);
+        $this->assertEquals(array('ignore.php', 'BadFile.php'), $configValues['phpcpd']['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/phpcpd'), $configValues['phpcpd']['locations']);
     }
 }

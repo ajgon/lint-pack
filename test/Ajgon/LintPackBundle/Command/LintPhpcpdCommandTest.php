@@ -61,8 +61,6 @@ class LintPhpcpdCommandTest extends LintPackTestCase
         $config = $this->getTestConfig();
         $config['lint_pack']['phpcpd']['locations'] =
             $this->parseConfigDirs($config['lint_pack']['phpcpd']['locations']);
-        $config['lint_pack']['phpcpd']['ignores'] =
-            array('ignore.php', 'BadFile.php');
 
         list($returnValue, $output) = $this->executeClassWithConfig($config);
         $result = $output->fetch();

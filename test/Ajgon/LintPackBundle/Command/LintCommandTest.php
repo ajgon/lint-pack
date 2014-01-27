@@ -28,6 +28,8 @@ class LintCommandTest extends LintPackTestCase
             $this->parseConfigDirs($config['lint_pack']['phpcs']['locations']);
         $config['lint_pack']['phpmd']['locations'] =
             $this->parseConfigDirs($config['lint_pack']['phpmd']['locations']);
+        $config['lint_pack']['phpcpd']['locations'] =
+            $this->parseConfigDirs($config['lint_pack']['phpcpd']['locations']);
         $config['lint_pack']['jshint']['bin'] = 'true';
 
         $this->command->setApplication($this->getApplication($config));
@@ -42,11 +44,13 @@ class LintCommandTest extends LintPackTestCase
         $jshintCommand = $this->initCommand(new LintJshintCommand(), $config);
         $phpcsCommand = $this->initCommand(new LintPhpcsCommand(), $config);
         $phpmdCommand = $this->initCommand(new LintPhpmdCommand(), $config);
+        $phpcpdCommand = $this->initCommand(new LintPhpcpdCommand(), $config);
 
         $application = new Application();
         $application->add($jshintCommand);
         $application->add($phpcsCommand);
         $application->add($phpmdCommand);
+        $application->add($phpcpdCommand);
 
         return $application;
     }

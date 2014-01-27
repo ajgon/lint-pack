@@ -18,15 +18,23 @@ class LintPhpcsCommandTest extends LintPackTestCase
 
     public function testConfigurationWithEmptyBin()
     {
-        $this->setExpectedException(
-            'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException',
-            'The path "lint_pack.phpcs.bin" cannot contain an empty value, but got null.',
-            0
-        );
+        $this->assertEmptyConfigParameter('phpcs', 'bin', false);
+    }
 
-        $config = $this->getTestConfig();
-        $config['lint_pack']['phpcs']['bin'] = null;
+    public function testConfigurationWithEmptyLocations()
+    {
+        $this->assertEmptyConfigParameter('phpcs', 'locations', true);
+    }
+
+    public function testEmptyConfiguration()
+    {
+        $config = $this->getEmptyTestConfig();
+
         $this->initWithConfig($config);
+        $this->assertEquals(
+            $this->getProperCommand($config),
+            $this->command->getCommand()
+        );
     }
 
     public function testIfProperCommandIsBuilt()
@@ -83,9 +91,21 @@ class LintPhpcsCommandTest extends LintPackTestCase
                ' -p' .
                ($config['lint_pack']['phpcs']['warnings'] ? '' : ' -n') .
                ($config['lint_pack']['phpcs']['recursion'] ? '' : ' -l') .
-               ' --standard=' . $config['lint_pack']['phpcs']['standard'] .
-               ' --extensions=' . implode(',', $config['lint_pack']['phpcs']['extensions']) .
-               ' --ignore=' . implode(',', $config['lint_pack']['phpcs']['ignores']) .
+               (
+                   $config['lint_pack']['phpcs']['standard'] ?
+                   ' --standard=' . $config['lint_pack']['phpcs']['standard'] :
+                   ''
+               ) .
+               (
+                   $config['lint_pack']['phpcs']['extensions'] ?
+                   ' --extensions=' . implode(',', $config['lint_pack']['phpcs']['extensions']) :
+                   ''
+               ) .
+               (
+                   $config['lint_pack']['phpcs']['ignores'] ?
+                   ' --ignore=' . implode(',', $config['lint_pack']['phpcs']['ignores']) :
+                   ''
+               ) .
                ' ' . implode(' ', $config['lint_pack']['phpcs']['locations']);
     }
 }

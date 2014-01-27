@@ -61,7 +61,12 @@ class LintJshintCommand extends ContainerAwareCommand
 
     private function getCommandWithoutIgnore($config)
     {
-        $extensions = '/(?:\.' . implode('$)|(?:\.', $config['extensions']) . '$)/';
+        if (empty($config['extensions'])) {
+            $extensions = '/\..[^.]+/';
+        } else {
+            $extensions = '/(?:\.' . implode('$)|(?:\.', $config['extensions']) . '$)/';
+        }
+
         $files = $this->getFilesMatching($config['locations'], $config['ignores'], $extensions);
 
         return trim(

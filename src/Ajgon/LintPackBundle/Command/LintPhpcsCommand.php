@@ -40,9 +40,9 @@ class LintPhpcsCommand extends ContainerAwareCommand
                ' -p' .
                ($config['warnings'] ? '' : ' -n') .
                ($config['recursion'] ? '' : ' -l') .
-               ' --standard=' . $config['standard'] .
-               ' --extensions=' . implode(',', $config['extensions']) .
-               ' --ignore=' . implode(',', $config['ignores']) .
+               ($config['standard'] ? ' --standard=' . $config['standard'] : '') .
+               ($config['extensions'] ? ' --extensions=' . implode(',', $config['extensions']) : '') .
+               ($config['ignores'] ? ' --ignore=' . implode(',', $config['ignores']) : '') .
                ' ' . implode(' ', $config['locations']);
     }
 

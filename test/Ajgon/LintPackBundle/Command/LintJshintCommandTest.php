@@ -78,15 +78,12 @@ class LintJshintCommandTest extends LintPackTestCase
 
     public function testConfigurationWithEmptyBin()
     {
-        $this->setExpectedException(
-            'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException',
-            'The path "lint_pack.jshint.bin" cannot contain an empty value, but got null.',
-            0
-        );
+        $this->assertEmptyConfigParameter('jshint', 'bin', false);
+    }
 
-        $config = $this->getTestConfig();
-        $config['lint_pack']['jshint']['bin'] = null;
-        $this->initWithConfig($config);
+    public function testConfigurationWithEmptyLocations()
+    {
+        $this->assertEmptyConfigParameter('jshint', 'locations', true);
     }
 
     public function testEmptyConfiguration()
@@ -94,7 +91,10 @@ class LintJshintCommandTest extends LintPackTestCase
         $config = $this->getEmptyTestConfig();
 
         $this->initWithConfig($config);
-        $this->assertEquals($this->getProperCommand($config), $this->command->getCommand());
+        $this->assertEquals(
+            $this->getProperCommand($config, $this->getValidFiles('/\.[^.]+/')),
+            $this->command->getCommand()
+        );
     }
 
     private function getProperCommand($config, $goodFiles = null)

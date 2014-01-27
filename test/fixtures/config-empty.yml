@@ -5,12 +5,14 @@ lint_pack:
         jshintignore: ~
         extensions: ~
         ignores: ~
-        locations: ~
+        locations:
+            - %kernel.root_dir%/../test/fixtures/jshint
     phpcs:
         bin: vendor/bin/phpcs
-        warnings: ~
-        recursion: ~
+        warnings: false
+        recursion: false
         standard: ~
         extensions: ~
         ignores: ~
-        locations: ~
+        locations:
+            - %kernel.root_dir%/../test/fixtures/phpcs

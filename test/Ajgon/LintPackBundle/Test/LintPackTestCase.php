@@ -35,6 +35,24 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
         $this->command->setContainer($container);
     }
 
+    protected function assertEmptyConfigParameter($linter, $param, $isArray)
+    {
+        $this->setExpectedException(
+            'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException',
+            (
+                $isArray ?
+                "The path \"lint_pack.{$linter}.{$param}\" should have at least 1 element(s) defined." :
+                "The path \"lint_pack.{$linter}.{$param}\" cannot contain an empty value, but got null."
+            ),
+            0
+        );
+
+        $config = $this->getTestConfig();
+        $config['lint_pack'][$linter][$param] = ($isArray ? array() : null);
+        $this->initWithConfig($config);
+
+    }
+
     protected function loadConfigToContainer(&$container, $config = null, $parseDir = false)
     {
         if (is_null($config)) {

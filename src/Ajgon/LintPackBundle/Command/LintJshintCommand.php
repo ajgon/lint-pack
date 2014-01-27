@@ -8,9 +8,10 @@ use RegexIterator;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
-class LintJshintCommand extends ContainerAwareCommand
+use Ajgon\LintPackBundle\Command\LintCommand;
+
+class LintJshintCommand extends LintCommand
 {
     private $allFiles = array();
 
@@ -27,15 +28,7 @@ class LintJshintCommand extends ContainerAwareCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $command = $this->getCommand();
-        $process = new Process($command);
-
-        $output->writeln($command);
-        $returnValue = $process->run();
-        $output->writeln($process->getOutput());
-
-        $this->displayResult($returnValue, $output);
-        return $returnValue;
+        return $this->executeCommand($output);
     }
 
     public function getCommand()
@@ -150,14 +143,5 @@ class LintJshintCommand extends ContainerAwareCommand
         }
 
         return $result;
-    }
-
-    private function displayResult($returnValue, $output)
-    {
-        if ($returnValue === 0) {
-            $output->writeln("<info>Done, without errors.</info>\n");
-        } else {
-            $output->writeln("<error>Command failed.</error>\n");
-        }
     }
 }

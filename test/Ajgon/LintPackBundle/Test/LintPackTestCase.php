@@ -70,7 +70,7 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
     {
         $this->initWithConfig($config);
 
-        $input = new ArrayInput(array());
+        $input = new ArrayInput(array('param'));
         $output = new BufferedOutput();
 
         $returnValue = $this->command->execute($input, $output);

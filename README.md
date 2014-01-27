@@ -123,6 +123,7 @@ This extension will add a new group `lint` to `app/console` task list:
 $ php app/console
 ...
 lint
+  lint:all                              Lint all files with all linters
   lint:jshint                           Lint all files with jshint
   lint:phpcs                            Lint all files with phpcs
 ```

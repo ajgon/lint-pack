@@ -3,10 +3,10 @@ namespace Ajgon\LintPackBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
-class LintPhpcsCommand extends ContainerAwareCommand
+use Ajgon\LintPackBundle\Command\LintCommand;
+
+class LintPhpcsCommand extends LintCommand
 {
     protected function configure()
     {
@@ -21,15 +21,7 @@ class LintPhpcsCommand extends ContainerAwareCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $command = $this->getCommand();
-        $process = new Process($command);
-
-        $output->writeln($command);
-        $returnValue = $process->run();
-        $output->writeln($process->getOutput());
-
-        $this->displayResult($returnValue, $output);
-        return $returnValue;
+        return $this->executeCommand($output);
     }
 
     public function getCommand()
@@ -44,14 +36,5 @@ class LintPhpcsCommand extends ContainerAwareCommand
                ($config['extensions'] ? ' --extensions=' . implode(',', $config['extensions']) : '') .
                ($config['ignores'] ? ' --ignore=' . implode(',', $config['ignores']) : '') .
                ' ' . implode(' ', $config['locations']);
-    }
-
-    private function displayResult($returnValue, $output)
-    {
-        if ($returnValue === 0) {
-            $output->writeln("<info>Done, without errors.</info>\n");
-        } else {
-            $output->writeln("<error>Command failed.</error>\n");
-        }
     }
 }

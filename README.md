@@ -1,7 +1,7 @@
-lint-pack
-=========
 
-[![](https://api.travis-ci.org/ajgon/lint-pack.png)](https://travis-ci.org/ajgon/lint-pack) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/ajgon/lint-pack/badges/quality-score.png?s=de8e8013793cea9d1c133c297021599e38cd207c)](https://scrutinizer-ci.com/g/ajgon/lint-pack/)
+[![](https://api.travis-ci.org/ajgon/lint-pack.png)](https://travis-ci.org/ajgon/lint-pack) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/ajgon/lint-pack/badges/quality-score.png?s=de8e8013793cea9d1c133c297021599e38cd207c)](https://scrutinizer-ci.com/g/ajgon/lint-pack/) [![Code Coverage](https://scrutinizer-ci.com/g/ajgon/lint-pack/badges/coverage.png?s=91b4b4a5f8a913a4411198d14d0c78004d06f919)](https://scrutinizer-ci.com/g/ajgon/lint-pack/)
+
+# Symfony AjgonLintPackBundle
 
 # Installation
 
@@ -227,20 +227,26 @@ To use specific linter, just launch it, e.g. `php app/console lint:jshint`.
 
 ## Testing
 
-    php vendor/bin/phpcs --standard=PSR2 --extensions=php src/ test/Ajgon -p"
-    php vendor/bin/phpmd --suffixes php src,test/Ajgon text codesize,controversial,design,unusedcode,naming"
-    php vendor/bin/phpcpd src test"
-    php vendor/bin/phpunit --coverage-text"
+    php vendor/bin/phpcs --standard=PSR2 --extensions=php src/ test/Ajgon -p
+    php vendor/bin/phpmd --suffixes php src,test/Ajgon text codesize,controversial,design,unusedcode,naming
+    php vendor/bin/phpcpd src test
+    php vendor/bin/phpunit --coverage-text
+
+
+## Contributing
+
+Please see [CONTRIBUTING][2] for details.
 
 ## Credits
 
-- [Igor Rzegocki][2] ([GitHub][3])
+- [Igor Rzegocki][3] ([GitHub][4])
 
 ## License
 
-This bundle is released under the [MIT license][4].
+This bundle is released under the [MIT license][5].
 
 [1]: https://github.com/composer/composer
-[2]: http://rzegocki.pl/
-[3]: https://github.com/ajgon
-[4]: https://github.com/ajgon/lint-pack/blob/master/LICENSE
+[2]: https://github.com/ajgon/lint-pack/blob/master/CONTRIBUTING.md
+[3]: http://rzegocki.pl/
+[4]: https://github.com/ajgon
+[5]: https://github.com/ajgon/lint-pack/blob/master/LICENSE

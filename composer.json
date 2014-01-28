@@ -8,7 +8,8 @@
     "authors": [
         {
             "name": "Igor Rzegocki",
-            "email": "ajgon@irgon.com"
+            "email": "ajgon@irgon.com",
+            "homepage": "http://rzegocki.pl/"
         }
     ],
     "require": {

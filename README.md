@@ -5,7 +5,7 @@ lint-pack
 
 # Overview
 
-This Bundle provides various linters for app/console command.
+This Bundle provides various linters for `app/console` command.
 
 # Installation
 

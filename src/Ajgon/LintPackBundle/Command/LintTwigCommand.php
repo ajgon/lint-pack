@@ -25,10 +25,11 @@ class LintTwigCommand extends LintCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $config = $this->getContainer()->getParameter('lint_pack.twig');
+        $files = $this->getFiles();
 
-        $files = empty($this->getFiles()) ?
+        $files = empty($files) ?
             $this->getFilesMatching($config['locations'], $config['ignores'], '/\.twig$/') :
-            $this->getFiles();
+            $files;
 
         $returnCodes = array();
 

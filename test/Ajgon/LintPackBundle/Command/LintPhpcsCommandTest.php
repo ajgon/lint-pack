@@ -26,6 +26,11 @@ class LintPhpcsCommandTest extends LintPackTestCase
         $this->assertEmptyConfigParameter('phpcs', 'locations', true);
     }
 
+    public function testIfDoesntLaunchWhenDisabled()
+    {
+        $this->assertDisabledConfig('phpcs');
+    }
+
     public function testIfProperCommandIsBuilt()
     {
         $this->assertEquals(

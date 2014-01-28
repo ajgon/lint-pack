@@ -24,26 +24,13 @@ class LintTwigCommand extends LintCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $config = $this->getContainer()->getParameter('lint_pack.twig');
-        $files = $this->getFiles();
-
-        $files = empty($files) ?
-            $this->getFilesMatching($config['locations'], $config['ignores'], '/\.twig$/') :
-            $files;
-
-        $returnCodes = array();
-
-        $output->writeln('Twig linter...');
-        foreach ($files as $file) {
-            $input = new ArrayInput(array('filename' => $file));
-            try {
-                $returnCodes[] = $this->launchTask('twig:lint', $input, $output, false);
-            } catch (\Exception $e) {
-                $output->writeln("<error>KO</error> in $file\n      <error>{$e->getMessage()}</error>");
-                $returnCodes[] = 1;
-            }
+        if (!$this->isTaskEnabled()) {
+            return $this->handleDisabledTask($output);
         }
-        $returnCode = max($returnCodes);
+
+        $files = $this->getTwigFiles();
+        $output->writeln('Twig linter...');
+        $returnCode = $this->handleExecution($files, $input, $output);
         $this->displayResult($returnCode, $output);
 
         return $returnCode;
@@ -57,5 +44,33 @@ class LintTwigCommand extends LintCommand
     public function setFiles($files)
     {
         $this->files = $files;
+    }
+
+    private function getTwigFiles()
+    {
+        $config = $this->getContainer()->getParameter('lint_pack.twig');
+        $files = $this->getFiles();
+
+        $files = empty($files) ?
+            $this->getFilesMatching($config['locations'], $config['ignores'], '/\.twig$/') :
+            $files;
+
+        return $files;
+    }
+
+    private function handleExecution($files, InputInterface $input, OutputInterface $output)
+    {
+        $returnCodes = array();
+
+        foreach ($files as $file) {
+            $input = new ArrayInput(array('filename' => $file));
+            try {
+                $returnCodes[] = $this->launchTask('twig:lint', $input, $output, false);
+            } catch (\Exception $e) {
+                $output->writeln("<error>KO</error> in $file\n      <error>{$e->getMessage()}</error>");
+                $returnCodes[] = 1;
+            }
+        }
+        return max($returnCodes);
     }
 }

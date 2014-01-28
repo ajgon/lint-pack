@@ -19,6 +19,11 @@ class LintJshintCommandTest extends LintPackTestCase
         $this->assertEquals('lint:jshint', $this->command->getName());
     }
 
+    public function testIfDoesntLaunchWhenDisabled()
+    {
+        $this->assertDisabledConfig('jshint');
+    }
+
     public function testIfProperCommandIsBuiltWithoutIgnore()
     {
         $this->command = new LintJshintCommand();

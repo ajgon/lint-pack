@@ -51,7 +51,17 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
         $config = $this->getTestConfig();
         $config['lint_pack'][$linter][$param] = ($isArray ? array() : null);
         $this->initWithConfig($config);
+    }
 
+    protected function assertDisabledConfig($name)
+    {
+        $config = $this->getTestConfig();
+        unset($config['lint_pack'][$name]);
+
+        list($returnValue, $output) = $this->executeClassWithConfig($config);
+
+        $this->assertEquals(0, $returnValue);
+        $this->assertEquals("Command has been disabled.\n", $output->fetch());
     }
 
     protected function loadConfigToContainer(&$container, $config = null, $parseDir = true)

@@ -23,6 +23,11 @@ class LintTwigCommandTest extends LintPackTestCase
         $this->assertEmptyConfigParameter('phpcpd', 'locations', true);
     }
 
+    public function testIfDoesntLaunchWhenDisabled()
+    {
+        $this->assertDisabledConfig('twig');
+    }
+
     public function testIfProcessExecutesCorrectly()
     {
         $config = $this->getTestConfig();

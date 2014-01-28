@@ -26,6 +26,11 @@ class LintPhpmdCommandTest extends LintPackTestCase
         $this->assertEmptyConfigParameter('phpmd', 'locations', true);
     }
 
+    public function testIfDoesntLaunchWhenDisabled()
+    {
+        $this->assertDisabledConfig('phpmd');
+    }
+
     public function testIfProperCommandIsBuilt()
     {
         $this->assertEquals(

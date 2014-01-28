@@ -16,7 +16,7 @@ class LintPackExtensionTest extends LintPackTestCase
 
     public function testIfJshintValuesWereLoadedToContainer()
     {
-        $jshintConfig = $this->getParameterConfig('jshint');
+        $jshintConfig = $this->getParameterConfig('lint_pack.jshint');
 
         $this->assertEquals('test-jshint', $jshintConfig['bin']);
         $this->assertEquals('/tmp/.jshintrc', $jshintConfig['jshintrc']);
@@ -27,7 +27,7 @@ class LintPackExtensionTest extends LintPackTestCase
 
     public function testIfPhpcsValuesWereLoadedToContainer()
     {
-        $phpcsConfig = $this->getParameterConfig('phpcs');
+        $phpcsConfig = $this->getParameterConfig('lint_pack.phpcs');
 
         $this->assertEquals('vendor/bin/phpcs', $phpcsConfig['bin']);
         $this->assertFalse($phpcsConfig['warnings']);
@@ -40,7 +40,7 @@ class LintPackExtensionTest extends LintPackTestCase
 
     public function testIfPhpmdValuesWereLoadedToContainer()
     {
-        $phpmdConfig = $this->getParameterConfig('phpmd');
+        $phpmdConfig = $this->getParameterConfig('lint_pack.phpmd');
 
         $this->assertEquals('vendor/bin/phpmd', $phpmdConfig['bin']);
         $this->assertEquals(
@@ -54,7 +54,7 @@ class LintPackExtensionTest extends LintPackTestCase
 
     public function testIfPhpcpdValuesWereLoadedToContainer()
     {
-        $phpcpdConfig = $this->getParameterConfig('phpcpd');
+        $phpcpdConfig = $this->getParameterConfig('lint_pack.phpcpd');
 
         $this->assertEquals('vendor/bin/phpcpd', $phpcpdConfig['bin']);
         $this->assertEquals('4', $phpcpdConfig['min_lines']);
@@ -66,16 +66,27 @@ class LintPackExtensionTest extends LintPackTestCase
 
     public function testIfTwigValuesWereLoadedToContainer()
     {
-        $twigConfig = $this->getParameterConfig('twig');
+        $twigConfig = $this->getParameterConfig('lint_pack.twig');
 
         $this->assertEquals(array('@ignore.twig@', '@bad.twig@'), $twigConfig['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/twig'), $twigConfig['locations']);
+    }
+
+    public function testIfAllLintersAreEnabled()
+    {
+        $enabledConfig = $this->getParameterConfig('lint_pack');
+
+        $this->assertTrue($enabledConfig['jshint']);
+        $this->assertTrue($enabledConfig['phpcpd']);
+        $this->assertTrue($enabledConfig['phpcs']);
+        $this->assertTrue($enabledConfig['phpmd']);
+        $this->assertTrue($enabledConfig['twig']);
     }
 
     private function getParameterConfig($name)
     {
         $container = $this->getContainerBuilder();
         $this->loadConfigToContainer($container, null, false);
-        return $container->getParameter('lint_pack.' . $name);
+        return $container->getParameter($name);
     }
 }

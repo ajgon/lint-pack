@@ -10,6 +10,10 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RegexIterator;
 
+/**
+ * {@inheritDoc}
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ */
 class LintCommand extends ContainerAwareCommand
 {
     protected $allFiles;
@@ -23,23 +27,22 @@ class LintCommand extends ContainerAwareCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $jshintReturnCode = $this->launchTask('lint:jshint', $input, $output);
-        $phpcsReturnCode = $this->launchTask('lint:phpcs', $input, $output);
-        $phpmdReturnCode = $this->launchTask('lint:phpcpd', $input, $output);
-        $phpcpdReturnCode = $this->launchTask('lint:phpmd', $input, $output);
-        $twigReturnCode = $this->launchTask('lint:twig', $input, $output);
+        $tasks = array('lint:jshint', 'lint:phpcs', 'lint:phpcpd', 'lint:phpmd', 'lint:twig');
+        $returnCodes = array();
 
-        return max(
-            $jshintReturnCode,
-            $phpcsReturnCode,
-            $phpmdReturnCode,
-            $phpcpdReturnCode,
-            $twigReturnCode
-        );
+        foreach ($tasks as $task) {
+            $returnCodes[] = $this->launchTask($task, $input, $output, $this->isTaskEnabled($task));
+        }
+
+        return max($returnCodes);
     }
 
     protected function executeCommand(OutputInterface $output)
     {
+        if (!$this->isTaskEnabled()) {
+            return $this->handleDisabledTask($output);
+        }
+
         $command = $this->getCommand();
         $process = new Process($command);
 
@@ -146,5 +149,17 @@ class LintCommand extends ContainerAwareCommand
         }
 
         return $result;
+    }
+
+    protected function isTaskEnabled($name = null)
+    {
+        $enabled = $this->getContainer()->getParameter('lint_pack');
+        return !!$enabled[str_replace('lint:', '', ($name ? $name : $this->getName()))];
+    }
+
+    protected function handleDisabledTask($output)
+    {
+        $output->writeln('<comment>Command has been disabled.</comment>');
+        return 0;
     }
 }

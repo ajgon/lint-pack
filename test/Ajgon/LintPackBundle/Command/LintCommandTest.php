@@ -39,6 +39,18 @@ class LintCommandTest extends LintPackTestCase
         $this->assertEquals(0, $returnValue[0]);
     }
 
+    public function testExecuteWithAllLintersDisabled()
+    {
+        $config = array('lint_pack' => null);
+
+        $this->command->setApplication($this->getApplication($config));
+
+        list($returnValue, $output) = $this->executeClassWithConfig($config);
+
+        $this->assertEquals(0, $returnValue);
+        $this->assertContains('Command has been disabled.', $output->fetch());
+    }
+
     private function getApplication($config)
     {
         $jshintCommand = $this->initCommand(new LintJshintCommand(), $config);

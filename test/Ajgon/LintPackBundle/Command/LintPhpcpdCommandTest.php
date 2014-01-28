@@ -89,6 +89,9 @@ class LintPhpcpdCommandTest extends LintPackTestCase
 
     private function getProperCommand($config)
     {
+        $config['lint_pack']['phpcpd']['locations'] =
+            $this->parseConfigDirs($config['lint_pack']['phpcpd']['locations']);
+
         return $config['lint_pack']['phpcpd']['bin'] .
                ' --progress' .
                (

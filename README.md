@@ -83,6 +83,34 @@ lint_pack:
             - "%kernel.root_dir%/my-assets"
 ```
 
+### phpcpd
+```yml
+lint_pack:
+    phpcpd:
+        # Path to the phpcs binary.
+        # required: yes, default: "phpcs"
+        bin: "vendor/bin/phpcpd"
+        # Minimum number of identical lines.
+        # required: no, default: 5
+        min_lines: 4
+        # Minimum number of identical tokens.
+        # required: no, default: 70
+        min_tokens: 60
+        # List of extensions which will be included for parsing
+        # required: no, default: ["php"]
+        extensions:
+            - php
+            - php5
+        # List of filespaths to ignore.
+        # required: no, default: []
+        ignores:
+            - ignore.php
+        # List of locations scanned for files.
+        # required: no, default: ["%kernel.root_dir%/../src"]
+        locations:
+            - "%kernel.root_dir%/my-source"
+```
+
 ### phpcs
 
 ```yml
@@ -110,34 +138,6 @@ lint_pack:
         # required: no, default: []
         ignores:
             - "ignore.php"
-        # List of locations scanned for files.
-        # required: no, default: ["%kernel.root_dir%/../src"]
-        locations:
-            - "%kernel.root_dir%/my-source"
-```
-
-### phpcpd
-```yml
-lint_pack:
-    phpcpd:
-        # Path to the phpcs binary.
-        # required: yes, default: "phpcs"
-        bin: "vendor/bin/phpcpd"
-        # Minimum number of identical lines.
-        # required: no, default: 5
-        min_lines: 4
-        # Minimum number of identical tokens.
-        # required: no, default: 70
-        min_tokens: 60
-        # List of extensions which will be included for parsing
-        # required: no, default: ["php"]
-        extensions:
-            - php
-            - php5
-        # List of filespaths to ignore.
-        # required: no, default: []
-        ignores:
-            - ignore.php
         # List of locations scanned for files.
         # required: no, default: ["%kernel.root_dir%/../src"]
         locations:
@@ -172,6 +172,22 @@ lint_pack:
             - "%kernel.root_dir%/my-source"
 ```
 
+### twig
+```yml
+lint_pack:
+    twig:
+        # List of regular expressions which will be tested against files found in locations.
+        # Every file matching patterns will be ignored. Files are absolute paths.
+        # required: no, default: []
+        ignores:
+            - "@ignore.twig@"
+        # List of locations scanned for files.
+        # required: no, default: ["%kernel.root_dir%", "%kernel.root_dir%/../src"]
+        locations:
+            - %kernel.root_dir%/../test/fixtures/twig
+
+```
+
 ## Usage
 
 This extension will add a new group `lint` to `app/console` task list:
@@ -182,19 +198,20 @@ $ php app/console
 lint
   lint:all                              Lint all files with all linters
   lint:jshint                           Lint all files with jshint
-  lint:phpcs                            Lint all files with phpcs
   lint:phpcpd                           Lint all files with phpcpd
+  lint:phpcs                            Lint all files with phpcs
   lint:phpmd                            Lint all files with phpmd
+  lint:twig                             Lint all files with twig:lint
 ```
 
 To use specific linter, just launch it, e.g. `php app/console lint:jshint`.
 
 ## Testing
 
-    php vendor/bin/phpcs --standard=PSR2 --extensions=php src/ -p
-    php vendor/bin/phpmd --suffixes php src/* text codesize,controversial,design,unusedcode,naming
-    php vendor/bin/phpcpd src
-    php vendor/bin/phpunit --coverage-text
+    php vendor/bin/phpcs --standard=PSR2 --extensions=php src/ test/Ajgon -p"
+    php vendor/bin/phpmd --suffixes php src,test/Ajgon text codesize,controversial,design,unusedcode,naming"
+    php vendor/bin/phpcpd src test"
+    php vendor/bin/phpunit --coverage-text"
 
 ## Credits
 

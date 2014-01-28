@@ -1,10 +1,6 @@
 <?php
 namespace Ajgon\LintPackBundle\Command;
 
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use RegexIterator;
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,8 +9,6 @@ use Ajgon\LintPackBundle\Command\LintCommand;
 
 class LintJshintCommand extends LintCommand
 {
-    private $allFiles = array();
-
     protected function configure()
     {
         $this
@@ -67,81 +61,5 @@ class LintJshintCommand extends LintCommand
             ((isset($config['jshintrc']) && $config['jshintrc']) ? ' --config ' . $config['jshintrc'] : '') .
             ' ' . implode(' ', $files)
         );
-    }
-
-    private function getFilesMatching($locations, $ignoresRegexpes, $extensionsRegexp)
-    {
-        $files = array();
-
-        foreach ($locations as $location) {
-            $ignoredFiles = $this->findIgnoredFiles($location, $ignoresRegexpes);
-            $files = array_merge($files, $this->findFilesWhichAreNotIgnored($location, $ignoredFiles));
-        }
-
-        return $this->filterFilesMatchingExtensionsRegexp($files, $extensionsRegexp);
-    }
-
-    private function findIgnoredFiles($location, $ignoresRegexpes)
-    {
-        $ignoredFiles = array();
-        $allFiles = $this->getAllFiles($location);
-
-        foreach ($ignoresRegexpes as $ignoresRegexp) {
-
-            $ignoredFiles = array_merge_recursive(
-                $ignoredFiles,
-                $this->convertIteratorToArray(new RegexIterator($allFiles, $ignoresRegexp))
-            );
-        }
-
-        return $ignoredFiles;
-    }
-
-    private function findFilesWhichAreNotIgnored($location, $ignoredFiles)
-    {
-        $notIgnoredFiles = array();
-        $iteratedFiles = $this->getAllFiles($location);
-
-        foreach ($iteratedFiles as $iteratedFile) {
-            if (!in_array($iteratedFile, $ignoredFiles)) {
-                $notIgnoredFiles[] = (string)$iteratedFile;
-            }
-        }
-
-        return $notIgnoredFiles;
-    }
-
-    private function filterFilesMatchingExtensionsRegexp($files, $extensionsRegexp)
-    {
-        $matchedFiles = array();
-
-        foreach ($files as $file) {
-            if (preg_match($extensionsRegexp, $file)) {
-                $matchedFiles[] = $file;
-            }
-        }
-
-        return $matchedFiles;
-    }
-
-    private function getAllFiles($location)
-    {
-        if (!isset($this->allFiles[$location])) {
-            $this->allFiles[$location] = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($location),
-                RecursiveIteratorIterator::SELF_FIRST
-            );
-        }
-        return $this->allFiles[$location];
-    }
-
-    private function convertIteratorToArray($iterator)
-    {
-        $result = array();
-        foreach ($iterator as $i) {
-            $result[] = (string)$i;
-        }
-
-        return $result;
     }
 }

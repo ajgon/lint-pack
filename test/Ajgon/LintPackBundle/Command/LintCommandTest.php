@@ -2,8 +2,6 @@
 namespace Ajgon\LintPackBundle\Command;
 
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 use Ajgon\LintPackBundle\Test\LintPackTestCase;
 
@@ -30,6 +28,8 @@ class LintCommandTest extends LintPackTestCase
             $this->parseConfigDirs($config['lint_pack']['phpmd']['locations']);
         $config['lint_pack']['phpcpd']['locations'] =
             $this->parseConfigDirs($config['lint_pack']['phpcpd']['locations']);
+        $config['lint_pack']['twig']['locations'] =
+            $this->parseConfigDirs($config['lint_pack']['twig']['locations']);
         $config['lint_pack']['jshint']['bin'] = 'true';
 
         $this->command->setApplication($this->getApplication($config));
@@ -45,12 +45,15 @@ class LintCommandTest extends LintPackTestCase
         $phpcsCommand = $this->initCommand(new LintPhpcsCommand(), $config);
         $phpmdCommand = $this->initCommand(new LintPhpmdCommand(), $config);
         $phpcpdCommand = $this->initCommand(new LintPhpcpdCommand(), $config);
+        $twigCommand = $this->initCommand(new LintTwigCommand(), $config);
 
         $application = new Application();
+        $application->add($this->getBaseTwigCommand());
         $application->add($jshintCommand);
         $application->add($phpcsCommand);
         $application->add($phpmdCommand);
         $application->add($phpcpdCommand);
+        $application->add($twigCommand);
 
         return $application;
     }
@@ -58,7 +61,7 @@ class LintCommandTest extends LintPackTestCase
     private function initCommand($command, $config)
     {
         $container = $this->getContainerBuilder();
-        $this->loadConfigToContainer($container, $config, true);
+        $this->loadConfigToContainer($container, $config);
         $command->setContainer($container);
 
         return $command;

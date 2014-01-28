@@ -3,11 +3,12 @@ namespace Ajgon\LintPackBundle\Test;
 
 use PHPUnit_Framework_TestCase;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Yaml\Yaml;
+use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Yaml\Yaml;
 
 use Ajgon\LintPackBundle\DependencyInjection\LintPackExtension;
 use Ajgon\LintPackBundle\DependencyInjection\Configuration;
@@ -23,7 +24,7 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
     protected function initWithConfig($config = null)
     {
         $container = $this->getContainerBuilder();
-        $this->loadConfigToContainer($container, $config, true);
+        $this->loadConfigToContainer($container, $config);
         $this->command->setContainer($container);
     }
 
@@ -31,7 +32,7 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
     {
         $config = $this->getDefaultConfig();
         $container = $this->getContainerBuilder();
-        $this->loadConfigToContainer($container, $config, true);
+        $this->loadConfigToContainer($container, $config);
         $this->command->setContainer($container);
     }
 
@@ -53,15 +54,16 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
 
     }
 
-    protected function loadConfigToContainer(&$container, $config = null, $parseDir = false)
+    protected function loadConfigToContainer(&$container, $config = null, $parseDir = true)
     {
         if (is_null($config)) {
             $config = $this->getTestConfig();
         }
 
-        if ($parseDir) {
-            $config['lint_pack']['jshint']['locations'] =
-                $this->parseConfigDirs($config['lint_pack']['jshint']['locations']);
+        if ($parseDir && isset($config['lint_pack'])) {
+            foreach ($config['lint_pack'] as $linter => $options) {
+                $config['lint_pack'][$linter]['locations'] = $this->parseConfigDirs($options['locations']);
+            }
         }
         $this->extension->load($config, $container);
     }
@@ -98,6 +100,8 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
 
         $bundles = array(
             'LintPackBundle' => 'Ajgon\LintPackBundle\LintPackBundle',
+            'TwigBundle' => 'Symfony\Bundle\TwigBundle\TwigBundle'
+            // 'TemplateLocator' => 'Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator'
         );
 
         $container->setParameter('kernel.bundles', $bundles);
@@ -119,5 +123,56 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
     protected function getEmptyTestConfig()
     {
         return Yaml::parse(TESTS_PATH.'/fixtures/config-empty.yml');
+    }
+
+    protected function getBaseTwigCommand()
+    {
+        $container = $this->buildTwigContainer();
+        $extension = new TwigExtension();
+        $extension->load(array(), $container);
+
+        $baseTwigCommand = new \Symfony\Bundle\TwigBundle\Command\LintCommand();
+        $baseTwigCommand->setContainer($container);
+
+        return $baseTwigCommand;
+    }
+
+    private function buildTwigContainer()
+    {
+        $container = $this->getContainerBuilder();
+        $container->setParameter('kernel.root_dir', TESTS_PATH);
+        $container->setParameter('kernel.debug', false);
+        $container->setParameter('kernel.cache_dir', TESTS_PATH . DIRECTORY_SEPARATOR . 'cache');
+        $container->setParameter('kernel.charset', 'UTF-8');
+        $container->set('templating.locator', $this->getTemplatingLocator());
+        $container->set('templating.name_parser', $this->getTemplatingNameParser());
+        $container->set('templating.globals', true);
+
+        return $container;
+    }
+
+    private function getTemplatingLocator()
+    {
+        return $this
+            ->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator')
+            ->setConstructorArgs(array($this->getFileLocator()))
+            ->getMock();
+    }
+
+    private function getTemplatingNameParser()
+    {
+        return $this
+            ->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\TemplateNameParser')
+            ->setConstructorArgs(array($this->getMock('Symfony\Component\HttpKernel\KernelInterface')))
+            ->getMock();
+    }
+
+    private function getFileLocator()
+    {
+        return $this
+            ->getMockBuilder('Symfony\Component\Config\FileLocator')
+            ->setMethods(array('locate'))
+            ->setConstructorArgs(array('/path/to/fallback'))
+            ->getMock();
     }
 }

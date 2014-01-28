@@ -16,9 +16,7 @@ class LintPackExtensionTest extends LintPackTestCase
 
     public function testIfJshintValuesWereLoadedToContainer()
     {
-        $container = $this->getContainerBuilder();
-        $this->loadConfigToContainer($container);
-        $jshintConfig = $container->getParameter('lint_pack.jshint');
+        $jshintConfig = $this->getParameterConfig('jshint');
 
         $this->assertEquals('test-jshint', $jshintConfig['bin']);
         $this->assertEquals('/tmp/.jshintrc', $jshintConfig['jshintrc']);
@@ -29,9 +27,7 @@ class LintPackExtensionTest extends LintPackTestCase
 
     public function testIfPhpcsValuesWereLoadedToContainer()
     {
-        $container = $this->getContainerBuilder();
-        $this->loadConfigToContainer($container);
-        $phpcsConfig = $container->getParameter('lint_pack.phpcs');
+        $phpcsConfig = $this->getParameterConfig('phpcs');
 
         $this->assertEquals('vendor/bin/phpcs', $phpcsConfig['bin']);
         $this->assertFalse($phpcsConfig['warnings']);
@@ -44,9 +40,7 @@ class LintPackExtensionTest extends LintPackTestCase
 
     public function testIfPhpmdValuesWereLoadedToContainer()
     {
-        $container = $this->getContainerBuilder();
-        $this->loadConfigToContainer($container);
-        $phpmdConfig = $container->getParameter('lint_pack.phpmd');
+        $phpmdConfig = $this->getParameterConfig('phpmd');
 
         $this->assertEquals('vendor/bin/phpmd', $phpmdConfig['bin']);
         $this->assertEquals(
@@ -60,9 +54,7 @@ class LintPackExtensionTest extends LintPackTestCase
 
     public function testIfPhpcpdValuesWereLoadedToContainer()
     {
-        $container = $this->getContainerBuilder();
-        $this->loadConfigToContainer($container);
-        $phpcpdConfig = $container->getParameter('lint_pack.phpcpd');
+        $phpcpdConfig = $this->getParameterConfig('phpcpd');
 
         $this->assertEquals('vendor/bin/phpcpd', $phpcpdConfig['bin']);
         $this->assertEquals('4', $phpcpdConfig['min_lines']);
@@ -70,5 +62,20 @@ class LintPackExtensionTest extends LintPackTestCase
         $this->assertEquals(array('php', 'php5'), $phpcpdConfig['extensions']);
         $this->assertEquals(array('ignore.php', 'BadFile.php'), $phpcpdConfig['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/phpcpd'), $phpcpdConfig['locations']);
+    }
+
+    public function testIfTwigValuesWereLoadedToContainer()
+    {
+        $twigConfig = $this->getParameterConfig('twig');
+
+        $this->assertEquals(array('@ignore.twig@', '@bad.twig@'), $twigConfig['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/twig'), $twigConfig['locations']);
+    }
+
+    private function getParameterConfig($name)
+    {
+        $container = $this->getContainerBuilder();
+        $this->loadConfigToContainer($container, null, false);
+        return $container->getParameter('lint_pack.' . $name);
     }
 }

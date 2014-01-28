@@ -135,4 +135,23 @@ class ConfigurationTest extends LintPackTestCase
         $this->assertEquals(array('ignore.php', 'BadFile.php'), $configValues['phpcpd']['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/phpcpd'), $configValues['phpcpd']['locations']);
     }
+
+    public function testIfTwigConfigContainsDefaultValues()
+    {
+        $configValues = $this->processor->processConfiguration($this->config, array());
+
+        $this->assertFalse($configValues['twig']['enabled']);
+        $this->assertEquals(array(), $configValues['twig']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%', '%kernel.root_dir%/../src'), $configValues['twig']['locations']);
+    }
+
+    public function testIfTwigConfigContainsCustomValues()
+    {
+        $config = $this->getTestConfig();
+        $configValues = $this->processor->processConfiguration($this->config, $config);
+
+        $this->assertTrue($configValues['twig']['enabled']);
+        $this->assertEquals(array('@ignore.twig@', '@bad.twig@'), $configValues['twig']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/twig'), $configValues['twig']['locations']);
+    }
 }

@@ -71,19 +71,22 @@ class LintPhpmdCommandTest extends LintPackTestCase
     public function testIfProcessFailsCorrectly()
     {
         $config = $this->getTestConfig();
-        $config['lint_pack']['phpcs']['locations'] =
+        $config['lint_pack']['phpmd']['locations'] =
             $this->parseConfigDirs(array('%kernel.root_dir%/../test/fixtures/phpmd/bad'));
 
         list($returnValue, $output) = $this->executeClassWithConfig($config);
         $result = $output->fetch();
 
-        $this->assertEquals(1, $returnValue);
+        $this->assertEquals(2, $returnValue);
         $this->assertContains($this->getProperCommand($config), $result);
         $this->assertContains('Command failed.', $result);
     }
 
     private function getProperCommand($config)
     {
+        $config['lint_pack']['phpmd']['locations'] =
+            $this->parseConfigDirs($config['lint_pack']['phpmd']['locations']);
+
         return $config['lint_pack']['phpmd']['bin'] .
                ' ' . implode(DIRECTORY_SEPARATOR . '*,', $config['lint_pack']['phpmd']['locations']) .
                ' text' .

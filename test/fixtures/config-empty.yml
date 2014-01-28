@@ -7,6 +7,12 @@ lint_pack:
         ignores: ~
         locations:
             - %kernel.root_dir%/../test/fixtures/jshint
+    csslint:
+        bin: text-csslint
+        disable_rules: ~
+        ignores: ~
+        locations:
+            - %kernel.root_dir%/../test/fixtures/csslint
     phpcs:
         bin: vendor/bin/phpcs
         warnings: false

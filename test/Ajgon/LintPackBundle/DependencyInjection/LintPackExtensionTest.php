@@ -21,6 +21,16 @@ class LintPackExtensionTest extends LintPackTestCase
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/jshint'), $jshintConfig['locations']);
     }
 
+    public function testIfCsslintValuesWereLoadedToContainer()
+    {
+        $csslintConfig = $this->getParameterConfig('lint_pack.csslint');
+
+        $this->assertEquals('test-csslint', $csslintConfig['bin']);
+        $this->assertEquals(array('adjoining-classes', 'box-sizing'), $csslintConfig['disable_rules']);
+        $this->assertEquals(array('ignore.css'), $csslintConfig['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/csslint'), $csslintConfig['locations']);
+    }
+
     public function testIfPhpcsValuesWereLoadedToContainer()
     {
         $phpcsConfig = $this->getParameterConfig('lint_pack.phpcs');

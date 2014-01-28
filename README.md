@@ -1,11 +1,7 @@
 lint-pack
 =========
 
-[![](https://api.travis-ci.org/ajgon/lint-pack.png)](https://travis-ci.org/ajgon/lint-pack)
-
-# Overview
-
-This Bundle provides various linters for `app/console` command.
+[![](https://api.travis-ci.org/ajgon/lint-pack.png)](https://travis-ci.org/ajgon/lint-pack) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/ajgon/lint-pack/badges/quality-score.png?s=de8e8013793cea9d1c133c297021599e38cd207c)](https://scrutinizer-ci.com/g/ajgon/lint-pack/)
 
 # Installation
 
@@ -19,7 +15,7 @@ your `composer.json` file:
     // ...
     "require": {
         // ...
-        "ajgon/lint-pack": "1.0.*@dev"
+        "ajgon/lint-pack": "1.1.*@dev"
         // ...
     }
     // ...
@@ -50,6 +46,28 @@ $bundles = array(
 ## Configuration
 
 This bundle configured under the `lint_pack` key in your application configuration. This includes settings related every linter available in package. Below are example configurations with descriptions.
+
+### csslint
+
+```yml
+lint_pack:
+    # Section for csslint options
+    csslint:
+        # Path to the csslint binary.
+        # required: yes, default: "csslint"
+        bin: "/somewhere/something/csslint"
+        # List of csslint rules which will be ignored.
+        # required: no, default: []
+        disable_rules:
+            - adjoining-classes
+            - box-sizing
+        ignores:
+            - "ignore.css"
+        # List of locations scanned for files.
+        # required: no, default: ["%kernel.root_dir%", "%kernel.root_dir%/../src"]
+        locations:
+            - "%kernel.root_dir%/my-assets"
+```
 
 ### JSHint
 
@@ -184,7 +202,7 @@ lint_pack:
         # List of locations scanned for files.
         # required: no, default: ["%kernel.root_dir%", "%kernel.root_dir%/../src"]
         locations:
-            - %kernel.root_dir%/../test/fixtures/twig
+            - "%kernel.root_dir%/my-assets"
 
 ```
 
@@ -197,6 +215,7 @@ $ php app/console
 ...
 lint
   lint:all                              Lint all files with all linters
+  lint:csslint                          Lint all files with csslint
   lint:jshint                           Lint all files with jshint
   lint:phpcpd                           Lint all files with phpcpd
   lint:phpcs                            Lint all files with phpcs

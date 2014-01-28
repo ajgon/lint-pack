@@ -4,6 +4,10 @@ namespace Ajgon\LintPackBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Processor;
 use Ajgon\LintPackBundle\Test\LintPackTestCase;
 
+/**
+ * {@inheritDoc}
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ */
 class ConfigurationTest extends LintPackTestCase
 {
     private $processor;
@@ -14,6 +18,7 @@ class ConfigurationTest extends LintPackTestCase
         $this->processor = new Processor();
         $this->config = new Configuration();
     }
+
     public function testIfJshintConfigContainsDefaultValues()
     {
         $configValues = $this->processor->processConfiguration($this->config, array());
@@ -45,6 +50,35 @@ class ConfigurationTest extends LintPackTestCase
         $this->assertEquals(array('js', 'javascript'), $configValues['jshint']['extensions']);
         $this->assertEquals(array('@r.js$@', '@/s[^/]+/jquery.js@'), $configValues['jshint']['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/jshint'), $configValues['jshint']['locations']);
+    }
+
+    public function testIfCsslintConfigContainsDefaultValues()
+    {
+        $configValues = $this->processor->processConfiguration($this->config, array());
+
+        $this->assertFalse($configValues['csslint']['enabled']);
+        $this->assertEquals('csslint', $configValues['csslint']['bin']);
+        $this->assertEquals(array(), $configValues['csslint']['disable_rules']);
+        $this->assertEquals(array(), $configValues['csslint']['ignores']);
+        $this->assertEquals(
+            array(
+                '%kernel.root_dir%',
+                '%kernel.root_dir%/../src'
+            ),
+            $configValues['csslint']['locations']
+        );
+    }
+
+    public function testIfCsslintConfigContainsCustomValues()
+    {
+        $config = $this->getTestConfig();
+        $configValues = $this->processor->processConfiguration($this->config, $config);
+
+        $this->assertTrue($configValues['csslint']['enabled']);
+        $this->assertEquals('test-csslint', $configValues['csslint']['bin']);
+        $this->assertEquals(array('adjoining-classes', 'box-sizing'), $configValues['csslint']['disable_rules']);
+        $this->assertEquals(array('ignore.css'), $configValues['csslint']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/csslint'), $configValues['csslint']['locations']);
     }
 
     public function testIfPhpcsConfigContainsDefaultValues()

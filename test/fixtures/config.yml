@@ -11,6 +11,15 @@ lint_pack:
             - "@/s[^/]+/jquery.js@"
         locations:
             - %kernel.root_dir%/../test/fixtures/jshint
+    csslint:
+        bin: test-csslint
+        disable_rules:
+            - adjoining-classes
+            - box-sizing
+        ignores:
+            - ignore.css
+        locations:
+            - %kernel.root_dir%/../test/fixtures/csslint
     phpcs:
         bin: vendor/bin/phpcs
         warnings: false

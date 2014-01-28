@@ -2,19 +2,20 @@
 namespace Ajgon\LintPackBundle\Test;
 
 use PHPUnit_Framework_TestCase;
-
 use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
-
 use Ajgon\LintPackBundle\DependencyInjection\LintPackExtension;
 use Ajgon\LintPackBundle\DependencyInjection\Configuration;
 
 class LintPackTestCase extends PHPUnit_Framework_TestCase
 {
+    protected $command;
+    protected $extension;
+
     public function setUp()
     {
         $this->extension = new LintPackExtension();
@@ -156,7 +157,7 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
         $container->setParameter('kernel.charset', 'UTF-8');
         $container->set('templating.locator', $this->getTemplatingLocator());
         $container->set('templating.name_parser', $this->getTemplatingNameParser());
-        $container->set('templating.globals', true);
+        $container->set('templating.globals', new \stdClass());
 
         return $container;
     }

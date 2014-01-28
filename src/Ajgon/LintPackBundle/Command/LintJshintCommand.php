@@ -1,10 +1,8 @@
 <?php
 namespace Ajgon\LintPackBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Ajgon\LintPackBundle\Command\LintCommand;
 
 class LintJshintCommand extends LintCommand
@@ -22,7 +20,7 @@ class LintJshintCommand extends LintCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        return $this->executeCommand($output);
+        return $this->executeCommand(($this->isTaskEnabled() ? $this->getCommand() : ''), $output);
     }
 
     public function getCommand()

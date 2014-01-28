@@ -3,7 +3,6 @@ namespace Ajgon\LintPackBundle\Command;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-
 use Ajgon\LintPackBundle\Test\LintPackTestCase;
 
 class LintJshintCommandTest extends LintPackTestCase

@@ -1,14 +1,13 @@
 <?php
 namespace Ajgon\LintPackBundle\Command;
 
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RegexIterator;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
-
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use RegexIterator;
 
 /**
  * {@inheritDoc}
@@ -37,13 +36,12 @@ class LintCommand extends ContainerAwareCommand
         return max($returnCodes);
     }
 
-    protected function executeCommand(OutputInterface $output)
+    protected function executeCommand($command, OutputInterface $output)
     {
         if (!$this->isTaskEnabled()) {
             return $this->handleDisabledTask($output);
         }
 
-        $command = $this->getCommand();
         $process = new Process($command);
 
         $output->writeln($command);
@@ -161,5 +159,10 @@ class LintCommand extends ContainerAwareCommand
     {
         $output->writeln('<comment>Command has been disabled.</comment>');
         return 0;
+    }
+
+    public function getCommand()
+    {
+        return 'app/console lint:all';
     }
 }

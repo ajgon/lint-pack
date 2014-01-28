@@ -2,7 +2,6 @@
 namespace Ajgon\LintPackBundle\Command;
 
 use Symfony\Component\Console\Application;
-
 use Ajgon\LintPackBundle\Test\LintPackTestCase;
 
 class LintCommandTest extends LintPackTestCase
@@ -16,6 +15,14 @@ class LintCommandTest extends LintPackTestCase
     public function testIfCommandHasGoodName()
     {
         $this->assertEquals('lint:all', $this->command->getName());
+    }
+
+    public function testIfProperCommandIsBuilt()
+    {
+        $this->assertEquals(
+            'app/console lint:all',
+            $this->command->getCommand()
+        );
     }
 
     public function testIfExecutesAllTasks()

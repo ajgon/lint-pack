@@ -3,7 +3,6 @@ namespace Ajgon\LintPackBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Ajgon\LintPackBundle\Command\LintCommand;
 
 class LintPhpcsCommand extends LintCommand
@@ -21,7 +20,7 @@ class LintPhpcsCommand extends LintCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        return $this->executeCommand($output);
+        return $this->executeCommand($this->getCommand(), $output);
     }
 
     public function getCommand()

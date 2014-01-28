@@ -1,7 +1,5 @@
 <?php
 
-use Composer\Autoload\ClassLoader;
-
 define('TESTS_PATH', __DIR__);
 define('VENDOR_PATH', realpath(__DIR__ . '/../vendor'));
 

@@ -4,7 +4,6 @@ namespace Ajgon\LintPackBundle\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Ajgon\LintPackBundle\Command\LintCommand;
 
 class LintTwigCommand extends LintCommand
@@ -30,7 +29,7 @@ class LintTwigCommand extends LintCommand
 
         $files = $this->getTwigFiles();
         $output->writeln('Twig linter...');
-        $returnCode = $this->handleExecution($files, $input, $output);
+        $returnCode = $this->handleExecution($files, $output);
         $this->displayResult($returnCode, $output);
 
         return $returnCode;
@@ -58,7 +57,7 @@ class LintTwigCommand extends LintCommand
         return $files;
     }
 
-    private function handleExecution($files, InputInterface $input, OutputInterface $output)
+    private function handleExecution($files, OutputInterface $output)
     {
         $returnCodes = array();
 

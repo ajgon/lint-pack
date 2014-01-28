@@ -1,13 +1,14 @@
 <?php
 namespace Ajgon\LintPackBundle\DependencyInjection;
 
-use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Config\Definition\Processor;
-
 use Ajgon\LintPackBundle\Test\LintPackTestCase;
 
 class ConfigurationTest extends LintPackTestCase
 {
+    private $processor;
+    private $config;
+
     public function setUp()
     {
         $this->processor = new Processor();

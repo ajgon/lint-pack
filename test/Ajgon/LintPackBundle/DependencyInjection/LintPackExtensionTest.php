@@ -1,11 +1,7 @@
 <?php
 namespace Ajgon\LintPackBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Yaml\Yaml;
-
 use Ajgon\LintPackBundle\Test\LintPackTestCase;
-use Ajgon\LintPackBundle\Command\LintJshintCommand;
 
 class LintPackExtensionTest extends LintPackTestCase
 {

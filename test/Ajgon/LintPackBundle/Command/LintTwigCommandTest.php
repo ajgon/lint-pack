@@ -58,6 +58,24 @@ class LintTwigCommandTest extends LintPackTestCase
         $this->assertContains('Command failed.', $result);
     }
 
+    public function testIfProcessCatchesExceptionCorrectly()
+    {
+        $config = $this->getTestConfig();
+        $config['lint_pack']['twig']['locations'] =
+            $this->parseConfigDirs($config['lint_pack']['twig']['locations']);
+        $this->command->setApplication($this->getApplication());
+        $this->command->setFiles(array('blah.twig'));
+
+        list($returnValue, $output) = $this->executeClassWithConfig($config);
+        $result = $output->fetch();
+
+        $this->assertEquals(1, $returnValue);
+        $this->assertContains('Twig linter...', $result);
+        $this->assertRegExp('@KO.*blah.twig@', $result);
+        $this->assertContains('not readable', $result);
+        $this->assertContains('Command failed.', $result);
+    }
+
     private function getApplication()
     {
         $application = new Application();

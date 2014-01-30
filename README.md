@@ -1,5 +1,5 @@
 
-[![](https://api.travis-ci.org/ajgon/lint-pack.png)](https://travis-ci.org/ajgon/lint-pack) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/ajgon/lint-pack/badges/quality-score.png?s=de8e8013793cea9d1c133c297021599e38cd207c)](https://scrutinizer-ci.com/g/ajgon/lint-pack/) [![Code Coverage](https://scrutinizer-ci.com/g/ajgon/lint-pack/badges/coverage.png?s=91b4b4a5f8a913a4411198d14d0c78004d06f919)](https://scrutinizer-ci.com/g/ajgon/lint-pack/)
+[![](https://api.travis-ci.org/ajgon/lint-pack.png)](https://travis-ci.org/ajgon/lint-pack) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/ajgon/lint-pack/badges/quality-score.png?s=de8e8013793cea9d1c133c297021599e38cd207c)](https://scrutinizer-ci.com/g/ajgon/lint-pack/) [![Code Coverage](https://scrutinizer-ci.com/g/ajgon/lint-pack/badges/coverage.png?s=91b4b4a5f8a913a4411198d14d0c78004d06f919)](https://scrutinizer-ci.com/g/ajgon/lint-pack/) [![Latest Stable Version](https://poser.pugx.org/ajgon/lint-pack/v/stable.png)](https://packagist.org/packages/ajgon/lint-pack) [![Total Downloads](https://poser.pugx.org/ajgon/lint-pack/downloads.png)](https://packagist.org/packages/ajgon/lint-pack) [![License](https://poser.pugx.org/ajgon/lint-pack/license.png)](https://packagist.org/packages/ajgon/lint-pack)
 
 # Symfony AjgonLintPackBundle
 

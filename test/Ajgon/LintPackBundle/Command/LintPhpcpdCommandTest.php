@@ -116,7 +116,8 @@ class LintPhpcpdCommandTest extends LintPackTestCase
                ) .
                (
                    $config['lint_pack']['phpcpd']['ignores'] ?
-                   ' --names-exclude=' . implode(',', $config['lint_pack']['phpcpd']['ignores']) :
+                   ' --names-exclude=' . implode(',', $config['lint_pack']['phpcpd']['ignores']) .
+                   ' --exclude=' . implode(',', $config['lint_pack']['phpcpd']['ignores']) :
                    ''
                ) .
                ' ' . implode(',', $config['lint_pack']['phpcpd']['locations']);

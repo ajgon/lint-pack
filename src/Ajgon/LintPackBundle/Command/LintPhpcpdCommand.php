@@ -32,7 +32,11 @@ class LintPhpcpdCommand extends LintCommand
                ($config['min_lines'] ? ' --min-lines=' . $config['min_lines'] : '') .
                ($config['min_tokens'] ? ' --min-tokens=' . $config['min_tokens'] : '') .
                ($config['extensions'] ? ' --names=\\*.' . implode(',\\*.', $config['extensions']) : '') .
-               ($config['ignores'] ? ' --names-exclude=' . implode(',', $config['ignores']) : '') .
+               ($config['ignores'] ?
+                    ' --names-exclude=' . implode(',', $config['ignores']) .
+                    ' --exclude=' . implode(',', $config['ignores']) :
+                    ''
+               ) .
                ' ' . implode(',', $config['locations']);
     }
 }

@@ -103,7 +103,7 @@ class LintPhpmdCommandTest extends LintPackTestCase
                ) .
                (
                    $config['lint_pack']['phpmd']['ignores'] ?
-                   ' --exclude=' . implode(',', $config['lint_pack']['phpmd']['ignores']) :
+                   ' --exclude ' . implode(',', $config['lint_pack']['phpmd']['ignores']) :
                    ''
                );
     }

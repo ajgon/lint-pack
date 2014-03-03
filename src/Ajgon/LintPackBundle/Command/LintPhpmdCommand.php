@@ -32,6 +32,6 @@ class LintPhpmdCommand extends LintCommand
                ' text' .
                ' ' . implode(',', $config['rulesets']) .
                ($config['extensions'] ? ' --suffixes=' . implode(',', $config['extensions']) : '') .
-               ($config['ignores'] ? ' --exclude=' . implode(',', $config['ignores']) : '');
+               ($config['ignores'] ? ' --exclude ' . implode(',', $config['ignores']) : '');
     }
 }

@@ -189,4 +189,16 @@ class ConfigurationTest extends LintPackTestCase
         $this->assertEquals(array('@ignore.twig@', '@bad.twig@'), $configValues['twig']['ignores']);
         $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/twig'), $configValues['twig']['locations']);
     }
+
+    public function testIfItWorksInLegacySymfony()
+    {
+        \Ajgon\LintPackBundle\BackwardCompatibility\NodeBuilder::$forceHack = true;
+
+        $config = $this->getTestConfig();
+        $configValues = $this->processor->processConfiguration($this->config, $config);
+
+        $this->assertTrue($configValues['twig']['enabled']);
+        $this->assertEquals(array('@ignore.twig@', '@bad.twig@'), $configValues['twig']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/twig'), $configValues['twig']['locations']);
+    }
 }

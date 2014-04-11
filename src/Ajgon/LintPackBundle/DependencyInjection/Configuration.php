@@ -1,7 +1,7 @@
 <?php
 namespace Ajgon\LintPackBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Ajgon\LintPackBundle\BackwardCompatibility\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface

@@ -11,27 +11,27 @@ class LintPhpmdCommandTest extends LintPackTestCase
         parent::setUp();
     }
 
-    public function testIfCommandHasGoodName()
+    public function testPhpmdIfCommandHasGoodName()
     {
         $this->assertEquals('lint:phpmd', $this->command->getName());
     }
 
-    public function testConfigurationWithEmptyBin()
+    public function testPhpmdConfigurationWithEmptyBin()
     {
         $this->assertEmptyConfigParameter('phpmd', 'bin', false);
     }
 
-    public function testConfigurationWithEmptyLocations()
+    public function testPhpmdConfigurationWithEmptyLocations()
     {
         $this->assertEmptyConfigParameter('phpmd', 'locations', true);
     }
 
-    public function testIfDoesntLaunchWhenDisabled()
+    public function testPhpmdIfDoesntLaunchWhenDisabled()
     {
         $this->assertDisabledConfig('phpmd');
     }
 
-    public function testIfProperCommandIsBuilt()
+    public function testPhpmdIfProperCommandIsBuilt()
     {
         $this->assertEquals(
             $this->getProperCommand($this->getTestConfig()),
@@ -39,7 +39,7 @@ class LintPhpmdCommandTest extends LintPackTestCase
         );
     }
 
-    public function testEmptyConfiguration()
+    public function testPhpmdEmptyConfiguration()
     {
         $config = $this->getEmptyTestConfig();
 
@@ -50,7 +50,7 @@ class LintPhpmdCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProperCommandIsBuiltForDefaults()
+    public function testPhpmdIfProperCommandIsBuiltForDefaults()
     {
         $this->command = new LintPhpmdCommand();
         $this->initWithoutConfig();
@@ -61,7 +61,7 @@ class LintPhpmdCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProcessExecutesCorrectly()
+    public function testPhpmdIfProcessExecutesCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['phpmd']['locations'] =
@@ -73,7 +73,7 @@ class LintPhpmdCommandTest extends LintPackTestCase
         $this->assertEquals($this->getProperCommand($config) . "\n\n\nDone, without errors.\n\n", $output->fetch());
     }
 
-    public function testIfProcessFailsCorrectly()
+    public function testPhpmdIfProcessFailsCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['phpmd']['locations'] =

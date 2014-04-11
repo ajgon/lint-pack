@@ -11,27 +11,27 @@ class LintCsslintCommandTest extends LintPackTestCase
         parent::setUp();
     }
 
-    public function testIfCommandHasGoodName()
+    public function testCsslintIfCommandHasGoodName()
     {
         $this->assertEquals('lint:csslint', $this->command->getName());
     }
 
-    public function testConfigurationWithEmptyBin()
+    public function testCsslintConfigurationWithEmptyBin()
     {
         $this->assertEmptyConfigParameter('csslint', 'bin', false);
     }
 
-    public function testConfigurationWithEmptyLocations()
+    public function testCsslintConfigurationWithEmptyLocations()
     {
         $this->assertEmptyConfigParameter('csslint', 'locations', true);
     }
 
-    public function testIfDoesntLaunchWhenDisabled()
+    public function testCsslintIfDoesntLaunchWhenDisabled()
     {
         $this->assertDisabledConfig('csslint');
     }
 
-    public function testEmptyConfiguration()
+    public function testCsslintEmptyConfiguration()
     {
         $config = $this->getEmptyTestConfig();
 
@@ -42,7 +42,7 @@ class LintCsslintCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProperCommandIsBuilt()
+    public function testCsslintIfProperCommandIsBuilt()
     {
         $this->assertEquals(
             $this->getProperCommand($this->getTestConfig()),
@@ -50,7 +50,7 @@ class LintCsslintCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProperCommandIsBuiltForDefaults()
+    public function testCsslintIfProperCommandIsBuiltForDefaults()
     {
         $this->command = new LintCsslintCommand();
         $this->initWithoutConfig();
@@ -61,7 +61,7 @@ class LintCsslintCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProcessExecutesCorrectly()
+    public function testCsslintIfProcessExecutesCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['csslint']['bin'] = 'true';
@@ -72,7 +72,7 @@ class LintCsslintCommandTest extends LintPackTestCase
         $this->assertEquals($this->getProperCommand($config) . "\nDone, without errors.\n\n", $output->fetch());
     }
 
-    public function testIfProcessFailsCorrectly()
+    public function testCsslintIfProcessFailsCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['csslint']['bin'] = 'false';

@@ -13,17 +13,17 @@ class LintJshintCommandTest extends LintPackTestCase
         parent::setUp();
     }
 
-    public function testIfCommandHasGoodName()
+    public function testJshintIfCommandHasGoodName()
     {
         $this->assertEquals('lint:jshint', $this->command->getName());
     }
 
-    public function testIfDoesntLaunchWhenDisabled()
+    public function testJshintIfDoesntLaunchWhenDisabled()
     {
         $this->assertDisabledConfig('jshint');
     }
 
-    public function testIfProperCommandIsBuiltWithoutIgnore()
+    public function testJshintIfProperCommandIsBuiltWithoutIgnore()
     {
         $this->command = new LintJshintCommand();
         $config = $this->getTestConfig();
@@ -36,7 +36,7 @@ class LintJshintCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProperComandIsBuiltWithIgnore()
+    public function testJshintIfProperComandIsBuiltWithIgnore()
     {
         $this->assertEquals(
             $this->getProperCommand($this->getTestConfig()),
@@ -44,7 +44,7 @@ class LintJshintCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProperCommandIsBuiltForDefaults()
+    public function testJshintIfProperCommandIsBuiltForDefaults()
     {
         $this->command = new LintJshintCommand();
         $this->initWithoutConfig();
@@ -58,7 +58,7 @@ class LintJshintCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProcessExecutesCorrectly()
+    public function testJshintIfProcessExecutesCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['jshint']['bin'] = 'true';
@@ -69,7 +69,7 @@ class LintJshintCommandTest extends LintPackTestCase
         $this->assertEquals($this->getProperCommand($config) . "\nDone, without errors.\n\n", $output->fetch());
     }
 
-    public function testIfProcessFailsCorrectly()
+    public function testJshintIfProcessFailsCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['jshint']['bin'] = 'false';
@@ -80,17 +80,17 @@ class LintJshintCommandTest extends LintPackTestCase
         $this->assertEquals($this->getProperCommand($config) . "\nCommand failed.\n\n", $output->fetch());
     }
 
-    public function testConfigurationWithEmptyBin()
+    public function testJshintConfigurationWithEmptyBin()
     {
         $this->assertEmptyConfigParameter('jshint', 'bin', false);
     }
 
-    public function testConfigurationWithEmptyLocations()
+    public function testJshintConfigurationWithEmptyLocations()
     {
         $this->assertEmptyConfigParameter('jshint', 'locations', true);
     }
 
-    public function testEmptyConfiguration()
+    public function testJshintEmptyConfiguration()
     {
         $config = $this->getEmptyTestConfig();
 

@@ -11,27 +11,27 @@ class LintPhpcpdCommandTest extends LintPackTestCase
         parent::setUp();
     }
 
-    public function testIfCommandHasGoodName()
+    public function testPhpcpdIfCommandHasGoodName()
     {
         $this->assertEquals('lint:phpcpd', $this->command->getName());
     }
 
-    public function testConfigurationWithEmptyBin()
+    public function testPhpcpdConfigurationWithEmptyBin()
     {
         $this->assertEmptyConfigParameter('phpcpd', 'bin', false);
     }
 
-    public function testConfigurationWithEmptyLocations()
+    public function testPhpcpdConfigurationWithEmptyLocations()
     {
         $this->assertEmptyConfigParameter('phpcpd', 'locations', true);
     }
 
-    public function testIfDoesntLaunchWhenDisabled()
+    public function testPhpcpdIfDoesntLaunchWhenDisabled()
     {
         $this->assertDisabledConfig('phpcpd');
     }
 
-    public function testIfProperCommandIsBuilt()
+    public function testPhpcpdIfProperCommandIsBuilt()
     {
         $this->assertEquals(
             $this->getProperCommand($this->getTestConfig()),
@@ -39,7 +39,7 @@ class LintPhpcpdCommandTest extends LintPackTestCase
         );
     }
 
-    public function testEmptyConfiguration()
+    public function testPhpcpdEmptyConfiguration()
     {
         $config = $this->getEmptyTestConfig();
         $this->initWithConfig($config);
@@ -50,7 +50,7 @@ class LintPhpcpdCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProperCommandIsBuiltForDefaults()
+    public function testPhpcpdIfProperCommandIsBuiltForDefaults()
     {
         $this->command = new LintPhpcpdCommand();
         $this->initWithoutConfig();
@@ -61,7 +61,7 @@ class LintPhpcpdCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProcessExecutesCorrectly()
+    public function testPhpcpdIfProcessExecutesCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['phpcpd']['locations'] =
@@ -75,7 +75,7 @@ class LintPhpcpdCommandTest extends LintPackTestCase
         $this->assertContains('Done, without errors.', $result);
     }
 
-    public function testIfProcessFailsCorrectly()
+    public function testPhpcpdIfProcessFailsCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['phpcpd']['locations'] =

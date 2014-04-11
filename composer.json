@@ -2,7 +2,7 @@
     "name": "ajgon/lint-pack",
     "description": "Various linters for your Symfony2 project",
     "type": "symfony-bundle",
-    "keywords": ["lint", "phpcs", "phpmd", "jshint", "csshint", "twig"],
+    "keywords": ["lint", "phpcs", "phpmd", "jshint", "csslint", "twig"],
     "homepage": "https://github.com/ajgon/lint-pack",
     "license": "MIT",
     "authors": [

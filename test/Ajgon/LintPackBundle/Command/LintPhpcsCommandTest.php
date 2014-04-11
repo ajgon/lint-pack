@@ -11,27 +11,27 @@ class LintPhpcsCommandTest extends LintPackTestCase
         parent::setUp();
     }
 
-    public function testIfCommandHasGoodName()
+    public function testPhpcsIfCommandHasGoodName()
     {
         $this->assertEquals('lint:phpcs', $this->command->getName());
     }
 
-    public function testConfigurationWithEmptyBin()
+    public function testPhpcsConfigurationWithEmptyBin()
     {
         $this->assertEmptyConfigParameter('phpcs', 'bin', false);
     }
 
-    public function testConfigurationWithEmptyLocations()
+    public function testPhpcsConfigurationWithEmptyLocations()
     {
         $this->assertEmptyConfigParameter('phpcs', 'locations', true);
     }
 
-    public function testIfDoesntLaunchWhenDisabled()
+    public function testPhpcsIfDoesntLaunchWhenDisabled()
     {
         $this->assertDisabledConfig('phpcs');
     }
 
-    public function testIfProperCommandIsBuilt()
+    public function testPhpcsIfProperCommandIsBuilt()
     {
         $this->assertEquals(
             $this->getProperCommand($this->getTestConfig()),
@@ -39,7 +39,7 @@ class LintPhpcsCommandTest extends LintPackTestCase
         );
     }
 
-    public function testEmptyConfiguration()
+    public function testPhpcsEmptyConfiguration()
     {
         $config = $this->getEmptyTestConfig();
 
@@ -50,7 +50,7 @@ class LintPhpcsCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProperCommandIsBuiltForDefaults()
+    public function testPhpcsIfProperCommandIsBuiltForDefaults()
     {
         $this->command = new LintPhpcsCommand();
         $this->initWithoutConfig();
@@ -61,7 +61,7 @@ class LintPhpcsCommandTest extends LintPackTestCase
         );
     }
 
-    public function testIfProcessExecutesCorrectly()
+    public function testPhpcsIfProcessExecutesCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['phpcs']['ignores'] = array('ignore.php', 'BadFile.php');
@@ -74,7 +74,7 @@ class LintPhpcsCommandTest extends LintPackTestCase
         $this->assertEquals($this->getProperCommand($config) . "\n.\n\n\nDone, without errors.\n\n", $output->fetch());
     }
 
-    public function testIfProcessFailsCorrectly()
+    public function testPhpcsIfProcessFailsCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['phpcs']['locations'] =

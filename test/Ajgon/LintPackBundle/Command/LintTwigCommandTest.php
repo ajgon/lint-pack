@@ -13,22 +13,22 @@ class LintTwigCommandTest extends LintPackTestCase
         parent::setUp();
     }
 
-    public function testIfCommandHasGoodName()
+    public function testTwigIfCommandHasGoodName()
     {
         $this->assertEquals('lint:twig', $this->command->getName());
     }
 
-    public function testConfigurationWithEmptyLocations()
+    public function testTwigConfigurationWithEmptyLocations()
     {
         $this->assertEmptyConfigParameter('phpcpd', 'locations', true);
     }
 
-    public function testIfDoesntLaunchWhenDisabled()
+    public function testTwigIfDoesntLaunchWhenDisabled()
     {
         $this->assertDisabledConfig('twig');
     }
 
-    public function testIfProcessExecutesCorrectly()
+    public function testTwigIfProcessExecutesCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['twig']['locations'] =
@@ -44,7 +44,7 @@ class LintTwigCommandTest extends LintPackTestCase
         $this->assertContains('Done, without errors.', $result);
     }
 
-    public function testIfProcessFailsCorrectly()
+    public function testTwigIfProcessFailsCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['twig']['locations'] =
@@ -63,7 +63,7 @@ class LintTwigCommandTest extends LintPackTestCase
         $this->assertContains('Command failed.', $result);
     }
 
-    public function testIfProcessCatchesExceptionCorrectly()
+    public function testTwigIfProcessCatchesExceptionCorrectly()
     {
         $config = $this->getTestConfig();
         $config['lint_pack']['twig']['locations'] =

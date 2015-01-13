@@ -70,7 +70,7 @@ class LintPhpmdCommandTest extends LintPackTestCase
         list($returnValue, $output) = $this->executeClassWithConfig($config);
 
         $this->assertEquals(0, $returnValue);
-        $this->assertEquals($this->getProperCommand($config) . "\n\n\nDone, without errors.\n\n", $output->fetch());
+        $this->assertContains("\n\n\nDone, without errors.\n\n", $output->fetch());
     }
 
     public function testPhpmdIfProcessFailsCorrectly()

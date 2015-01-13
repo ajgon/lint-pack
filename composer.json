@@ -19,10 +19,10 @@
         "symfony/console": ">=2.1"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "1.*",
-        "phpunit/phpunit": "3.7.*",
-        "phpmd/phpmd" : "1.4.*",
-        "sebastian/phpcpd": "*",
+        "squizlabs/php_codesniffer": ">=2.0",
+        "phpunit/phpunit": ">=4.0",
+        "phpmd/phpmd" : ">=2.0",
+        "sebastian/phpcpd": ">=2.0",
         "symfony/twig-bundle": ">=2.1"
     },
     "target-dir": "",

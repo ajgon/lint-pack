@@ -71,7 +71,7 @@ class LintPhpcsCommandTest extends LintPackTestCase
         list($returnValue, $output) = $this->executeClassWithConfig($config);
 
         $this->assertEquals(0, $returnValue);
-        $this->assertEquals($this->getProperCommand($config) . "\n.\n\n\nDone, without errors.\n\n", $output->fetch());
+        $this->assertContains("\n\nDone, without errors.\n\n", $output->fetch());
     }
 
     public function testPhpcsIfProcessFailsCorrectly()
@@ -86,7 +86,7 @@ class LintPhpcsCommandTest extends LintPackTestCase
         $this->assertEquals(1, $returnValue);
         $this->assertContains($this->getProperCommand($config), $result);
         $this->assertContains('Command failed.', $result);
-        $this->assertContains('FOUND 1 ERROR(S) AFFECTING 1 LINE(S)', $result);
+        $this->assertRegExp('@FOUND 1 ERROR(?:\(S\))? AFFECTING 1 LINE@', $result);
         $this->assertContains('25 | ERROR | Missing function doc comment', $result);
     }
 

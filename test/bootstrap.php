@@ -2,6 +2,7 @@
 
 define('TESTS_PATH', __DIR__);
 define('VENDOR_PATH', realpath(__DIR__ . '/../vendor'));
+date_default_timezone_set('UTC');
 
 if (!class_exists('PHPUnit_Framework_TestCase') ||
     version_compare(PHPUnit_Runner_Version::id(), '3.5') < 0

@@ -91,7 +91,6 @@ class LintCommand extends ContainerAwareCommand
         $allFiles = $this->getAllFiles($location);
 
         foreach ($ignoresRegexpes as $ignoresRegexp) {
-
             $ignoredFiles = array_merge_recursive(
                 $ignoredFiles,
                 $this->convertIteratorToArray(new RegexIterator($allFiles, $ignoresRegexp))

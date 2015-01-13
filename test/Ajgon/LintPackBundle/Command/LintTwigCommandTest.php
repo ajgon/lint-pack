@@ -40,7 +40,7 @@ class LintTwigCommandTest extends LintPackTestCase
 
         $this->assertEquals(0, $returnValue);
         $this->assertContains('Twig linter...', $result);
-        $this->assertRegExp('@OK.*good.twig\\n@', $result);
+        $this->assertRegExp('@(?:OK.*good.twig\\n)|(?:1/1 valid file)@', $result);
         $this->assertContains('Done, without errors.', $result);
     }
 
@@ -57,7 +57,7 @@ class LintTwigCommandTest extends LintPackTestCase
 
         $this->assertEquals(1, $returnValue);
         $this->assertContains('Twig linter...', $result);
-        $this->assertRegExp('@OK.*good.twig\\n@', $result);
+        $this->assertRegExp('@(?:OK.*good.twig\\n)|(?:1/1 valid file)@', $result);
         $this->assertRegExp('@KO.*bad.twig@', $result);
         $this->assertContains('bazinga', $result);
         $this->assertContains('Command failed.', $result);

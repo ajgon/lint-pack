@@ -17,7 +17,7 @@ class LintPackExtension extends Extension
         $container->setParameter('lint_pack.phpcs', $config['phpcs']);
         $container->setParameter('lint_pack.phpmd', $config['phpmd']);
         $container->setParameter('lint_pack.phpcpd', $config['phpcpd']);
-        $container->setParameter('lint_pack.twig', $config['twig']);
+        $container->setParameter('lint_pack.twigviews', $config['twigviews']);
         $container->setParameter('lint_pack', $this->determineEnabledLinters($config));
     }
 

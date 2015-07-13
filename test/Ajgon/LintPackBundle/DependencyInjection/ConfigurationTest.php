@@ -175,9 +175,12 @@ class ConfigurationTest extends LintPackTestCase
     {
         $configValues = $this->processor->processConfiguration($this->config, array());
 
-        $this->assertFalse($configValues['twig']['enabled']);
-        $this->assertEquals(array(), $configValues['twig']['ignores']);
-        $this->assertEquals(array('%kernel.root_dir%', '%kernel.root_dir%/../src'), $configValues['twig']['locations']);
+        $this->assertFalse($configValues['twigviews']['enabled']);
+        $this->assertEquals(array(), $configValues['twigviews']['ignores']);
+        $this->assertEquals(
+            array('%kernel.root_dir%', '%kernel.root_dir%/../src'),
+            $configValues['twigviews']['locations']
+        );
     }
 
     public function testIfTwigConfigContainsCustomValues()
@@ -185,9 +188,9 @@ class ConfigurationTest extends LintPackTestCase
         $config = $this->getTestConfig();
         $configValues = $this->processor->processConfiguration($this->config, $config);
 
-        $this->assertTrue($configValues['twig']['enabled']);
-        $this->assertEquals(array('@ignore.twig@', '@bad.twig@'), $configValues['twig']['ignores']);
-        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/twig'), $configValues['twig']['locations']);
+        $this->assertTrue($configValues['twigviews']['enabled']);
+        $this->assertEquals(array('@ignore.twig@', '@bad.twig@'), $configValues['twigviews']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/twig'), $configValues['twigviews']['locations']);
     }
 
     public function testIfItWorksInLegacySymfony()
@@ -197,8 +200,8 @@ class ConfigurationTest extends LintPackTestCase
         $config = $this->getTestConfig();
         $configValues = $this->processor->processConfiguration($this->config, $config);
 
-        $this->assertTrue($configValues['twig']['enabled']);
-        $this->assertEquals(array('@ignore.twig@', '@bad.twig@'), $configValues['twig']['ignores']);
-        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/twig'), $configValues['twig']['locations']);
+        $this->assertTrue($configValues['twigviews']['enabled']);
+        $this->assertEquals(array('@ignore.twig@', '@bad.twig@'), $configValues['twigviews']['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/twig'), $configValues['twigviews']['locations']);
     }
 }

@@ -167,7 +167,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode('twig')
+                ->arrayNode('twigviews')
                     ->canBeEnabled()
                     ->children()
                         ->arrayNode('ignores')

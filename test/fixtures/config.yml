@@ -55,7 +55,7 @@ lint_pack:
             - BadFile.php
         locations:
             - %kernel.root_dir%/../test/fixtures/phpcpd
-    twig:
+    twigviews:
         ignores:
             - "@ignore.twig@"
             - "@bad.twig@"

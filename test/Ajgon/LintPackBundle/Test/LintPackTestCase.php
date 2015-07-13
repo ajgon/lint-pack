@@ -116,6 +116,7 @@ class LintPackTestCase extends PHPUnit_Framework_TestCase
         );
 
         $container->setParameter('kernel.bundles', $bundles);
+        $container->setParameter('kernel.environment', 'test');
 
         return $container;
     }

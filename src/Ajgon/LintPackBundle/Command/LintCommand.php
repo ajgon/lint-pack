@@ -26,7 +26,7 @@ class LintCommand extends ContainerAwareCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $tasks = array('lint:jshint', 'lint:phpcs', 'lint:phpcpd', 'lint:phpmd', 'lint:twig');
+        $tasks = array('lint:jshint', 'lint:phpcs', 'lint:phpcpd', 'lint:phpmd', 'lint:twigviews');
         $returnCodes = array();
 
         foreach ($tasks as $task) {

@@ -5,17 +5,17 @@ use Symfony\Component\Console\Application;
 
 use Ajgon\LintPackBundle\Test\LintPackTestCase;
 
-class LintTwigCommandTest extends LintPackTestCase
+class LintTwigviewsCommandTest extends LintPackTestCase
 {
     public function setUp()
     {
-        $this->command = new LintTwigCommand();
+        $this->command = new LintTwigviewsCommand();
         parent::setUp();
     }
 
     public function testTwigIfCommandHasGoodName()
     {
-        $this->assertEquals('lint:twig', $this->command->getName());
+        $this->assertEquals('lint:twigviews', $this->command->getName());
     }
 
     public function testTwigConfigurationWithEmptyLocations()
@@ -25,14 +25,14 @@ class LintTwigCommandTest extends LintPackTestCase
 
     public function testTwigIfDoesntLaunchWhenDisabled()
     {
-        $this->assertDisabledConfig('twig');
+        $this->assertDisabledConfig('twigviews');
     }
 
     public function testTwigIfProcessExecutesCorrectly()
     {
         $config = $this->getTestConfig();
-        $config['lint_pack']['twig']['locations'] =
-            $this->parseConfigDirs($config['lint_pack']['twig']['locations']);
+        $config['lint_pack']['twigviews']['locations'] =
+            $this->parseConfigDirs($config['lint_pack']['twigviews']['locations']);
         $this->command->setApplication($this->getApplication());
 
         list($returnValue, $output) = $this->executeClassWithConfig($config);
@@ -47,9 +47,9 @@ class LintTwigCommandTest extends LintPackTestCase
     public function testTwigIfProcessFailsCorrectly()
     {
         $config = $this->getTestConfig();
-        $config['lint_pack']['twig']['locations'] =
-            $this->parseConfigDirs($config['lint_pack']['twig']['locations']);
-        $config['lint_pack']['twig']['ignores'] = array('@ignore.twig@');
+        $config['lint_pack']['twigviews']['locations'] =
+            $this->parseConfigDirs($config['lint_pack']['twigviews']['locations']);
+        $config['lint_pack']['twigviews']['ignores'] = array('@ignore.twig@');
         $this->command->setApplication($this->getApplication());
 
         list($returnValue, $output) = $this->executeClassWithConfig($config);
@@ -66,8 +66,8 @@ class LintTwigCommandTest extends LintPackTestCase
     public function testTwigIfProcessCatchesExceptionCorrectly()
     {
         $config = $this->getTestConfig();
-        $config['lint_pack']['twig']['locations'] =
-            $this->parseConfigDirs($config['lint_pack']['twig']['locations']);
+        $config['lint_pack']['twigviews']['locations'] =
+            $this->parseConfigDirs($config['lint_pack']['twigviews']['locations']);
         $this->command->setApplication($this->getApplication());
         $this->command->setFiles(array('blah.twig'));
 

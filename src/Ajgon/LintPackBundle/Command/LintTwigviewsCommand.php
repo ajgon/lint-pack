@@ -6,15 +6,15 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Ajgon\LintPackBundle\Command\LintCommand;
 
-class LintTwigCommand extends LintCommand
+class LintTwigviewsCommand extends LintCommand
 {
     private $files = array();
 
     protected function configure()
     {
         $this
-            ->setName('lint:twig')
-            ->setDescription('Lint all files with twig:lint');
+            ->setName('lint:twigviews')
+            ->setDescription('Lint all files with twig linter');
     }
 
     /**
@@ -47,7 +47,7 @@ class LintTwigCommand extends LintCommand
 
     private function getTwigFiles()
     {
-        $config = $this->getContainer()->getParameter('lint_pack.twig');
+        $config = $this->getContainer()->getParameter('lint_pack.twigviews');
         $files = $this->getFiles();
 
         $files = empty($files) ?
@@ -60,11 +60,17 @@ class LintTwigCommand extends LintCommand
     private function handleExecution($files, OutputInterface $output)
     {
         $returnCodes = array();
+        $version = (int)str_pad(str_replace('.', '', \Symfony\Component\HttpKernel\Kernel::VERSION), 5, '0');
 
         foreach ($files as $file) {
-            $input = new ArrayInput(array('filename' => $file));
+            if ($version >= 27000) {
+                $input = new ArrayInput(array('lint:twig', 'filename' => array($file)));
+            } else {
+                $input = new ArrayInput(array('twig:lint', 'filename' => $file));
+            }
             try {
-                $returnCodes[] = $this->launchTask('twig:lint', $input, $output, false);
+                $returnCodes[] =
+                    $this->launchTask(($version >= 27000 ? 'lint:twig' : 'twig:lint'), $input, $output, false);
             } catch (\Exception $e) {
                 $output->writeln("<error>KO</error> in $file\n      <error>{$e->getMessage()}</error>");
                 $returnCodes[] = 1;

@@ -72,10 +72,10 @@ class LintPackExtensionTest extends LintPackTestCase
 
     public function testIfTwigValuesWereLoadedToContainer()
     {
-        $twigConfig = $this->getParameterConfig('lint_pack.twig');
+        $twigviewsConfig = $this->getParameterConfig('lint_pack.twigviews');
 
-        $this->assertEquals(array('@ignore.twig@', '@bad.twig@'), $twigConfig['ignores']);
-        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/twig'), $twigConfig['locations']);
+        $this->assertEquals(array('@ignore.twig@', '@bad.twig@'), $twigviewsConfig['ignores']);
+        $this->assertEquals(array('%kernel.root_dir%/../test/fixtures/twig'), $twigviewsConfig['locations']);
     }
 
     public function testIfAllLintersAreEnabled()
@@ -86,7 +86,7 @@ class LintPackExtensionTest extends LintPackTestCase
         $this->assertTrue($enabledConfig['phpcpd']);
         $this->assertTrue($enabledConfig['phpcs']);
         $this->assertTrue($enabledConfig['phpmd']);
-        $this->assertTrue($enabledConfig['twig']);
+        $this->assertTrue($enabledConfig['twigviews']);
     }
 
     private function getParameterConfig($name)

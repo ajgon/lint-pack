@@ -193,7 +193,7 @@ lint_pack:
 ### twig
 ```yml
 lint_pack:
-    twig:
+    twigviews:
         # List of regular expressions which will be tested against files found in locations.
         # Every file matching patterns will be ignored. Files are absolute paths.
         # required: no, default: []
@@ -220,7 +220,7 @@ lint
   lint:phpcpd                           Lint all files with phpcpd
   lint:phpcs                            Lint all files with phpcs
   lint:phpmd                            Lint all files with phpmd
-  lint:twig                             Lint all files with twig:lint
+  lint:twigviews                        Lint all files with twig linters
 ```
 
 To use specific linter, just launch it, e.g. `php app/console lint:jshint`.
